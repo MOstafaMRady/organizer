@@ -2,8 +2,7 @@ import * as express from 'express';
 
 import CatCtrl from './controllers/cat';
 import UserCtrl from './controllers/user';
-import Cat from './models/cat';
-import User from './models/user';
+import PlaceController from './controllers/place';
 
 export default function setRoutes(app) {
 
@@ -11,6 +10,15 @@ export default function setRoutes(app) {
 
   const catCtrl = new CatCtrl();
   const userCtrl = new UserCtrl();
+  const placeController = new PlaceController();
+
+  // Places
+  router.route('/places').get(placeController.getAll);
+  router.route('/places/count').get(placeController.count);
+  router.route('/place').post(placeController.insert);
+  router.route('/place/:id').get(placeController.get);
+  router.route('/place/:id').put(placeController.update);
+  router.route('/place/:id').delete(placeController.delete);
 
   // Cats
   router.route('/cats').get(catCtrl.getAll);

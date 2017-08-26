@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-place',
-  templateUrl: './place.component.html',
-  styleUrls: ['./place.component.scss']
+  templateUrl: './place.component.html'
 })
 export class PlaceComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }
