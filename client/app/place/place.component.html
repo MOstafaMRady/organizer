@@ -1,3 +1,74 @@
-<pre>
-  {{ places | json }}
-</pre>
+<div>
+  <table>
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>phone 1</th>
+      <th>phone 2</th>
+      <th>phone 3</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let p of places">
+      <td>{{p.name}}</td>
+      <td>{{p.phone1}}</td>
+      <td>{{p.phone2}}</td>
+      <td>{{p.phone3}}</td>
+      <td>
+        <button class="btn-success" (click)="updateManually(p)">Edit</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<button class="btn btn-primary" (click)="updateManually(places[0])">Update model</button>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <b>Add place</b>
+  </div>
+  <div class="panel-body">
+    <form [formGroup]="form">
+      <input type="hidden" formControlName="_id">
+      <div class="form-group row">
+        <label for="name" class="col-sm-2 col-form-label">Place name</label>
+        <div class="col-sm-10">
+          <input class="form-control" id="name" formControlName="name">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="phone1" class="col-sm-2 col-form-label">Phone 1</label>
+        <div class="col-sm-10">
+          <input class="form-control" id="phone1" formControlName="phone1">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="phone2" class="col-sm-2 col-form-label">Phone 2</label>
+        <div class="col-sm-10">
+          <input class="form-control" id="phone2" formControlName="phone2">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="phone1" class="col-sm-2 col-form-label">Phone 3</label>
+        <div class="col-sm-10">
+          <input class="form-control" id="phone3" formControlName="phone3">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="address" class="col-sm-2 col-form-label">Address</label>
+        <div class="col-sm-10">
+          <textarea class="form-control" id="address" formControlName="address">
+          </textarea>
+        </div>
+      </div>
+      <button class="btn btn-primary" (click)="save()">Save</button>
+    </form>
+    <pre>
+      {{form.value|json}}
+    </pre>
+  </div>
+</div>
