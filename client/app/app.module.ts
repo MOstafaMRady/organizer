@@ -17,6 +17,7 @@ import { AccountComponent } from './account/account.component';
 import { AdminComponent } from './admin/admin.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { PlaceComponent } from './place/place.component';
+import {PlaceCrudService} from './place/place-crud.service';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { PlaceComponent } from './place/place.component';
     AuthGuardLogin,
     AuthGuardAdmin,
     CatService,
-    UserService
+    UserService,
+    PlaceCrudService
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
