@@ -1,5 +1,4 @@
 import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-
 import {RoutingModule} from './routing.module';
 import {SharedModule} from './shared/shared.module';
 import {CatService} from './services/cat.service';
@@ -19,6 +18,8 @@ import {NotFoundComponent} from './not-found/not-found.component';
 import {PlaceComponent} from './place/place.component';
 import {PlaceCrudService} from './place/place-crud.service';
 import {ReactiveFormsModule} from '@angular/forms';
+import {CourseComponent} from './course/course.component';
+import {CourseCrudService} from './course/course-crud.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {ReactiveFormsModule} from '@angular/forms';
     AccountComponent,
     AdminComponent,
     NotFoundComponent,
-    PlaceComponent
+    PlaceComponent,
+    CourseComponent
   ],
   imports: [
     RoutingModule,
@@ -44,7 +46,8 @@ import {ReactiveFormsModule} from '@angular/forms';
     AuthGuardAdmin,
     CatService,
     UserService,
-    PlaceCrudService
+    PlaceCrudService,
+    CourseCrudService
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]

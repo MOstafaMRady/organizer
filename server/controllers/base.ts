@@ -49,12 +49,22 @@ abstract class BaseCtrl {
 
   // Update by id
   update = (req, res) => {
-    this.model.findOneAndUpdate({_id: req.params.id}, req.body, (err) => {
-      if (err) {
-        return console.error(err);
-      }
-      res.sendStatus(200);
-    });
+    console.log('============================ wrong route =============================');
+    const id = req.params.id || res.params._id;
+    console.log(id);
+    if (!id) {
+      res.sendStatus(404);
+    }
+    this.model.findOneAndUpdate(
+      {_id: req.params.id},
+      req.body,
+      {new: true},
+      (err) => {
+        if (err) {
+          return console.error(err);
+        }
+        res.sendStatus(200);
+      });
   }
 
   // Delete by id

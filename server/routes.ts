@@ -3,6 +3,7 @@ import * as express from 'express';
 import CatCtrl from './controllers/cat';
 import UserCtrl from './controllers/user';
 import PlaceController from './controllers/place';
+import CourseController from './controllers/course';
 
 export default function setRoutes(app) {
 
@@ -11,6 +12,15 @@ export default function setRoutes(app) {
   const catCtrl = new CatCtrl();
   const userCtrl = new UserCtrl();
   const placeController = new PlaceController();
+  const courseController = new CourseController();
+
+  // Places
+  router.route('/courses').get(courseController.getAll);
+  router.route('/courses/count').get(courseController.count);
+  router.route('/course').post(courseController.insert);
+  router.route('/course/:id').get(courseController.get);
+  router.route('/update-course/:id').put(courseController.updateItem);
+  router.route('/course/:id').delete(courseController.delete);
 
   // Places
   router.route('/places').get(placeController.getAll);

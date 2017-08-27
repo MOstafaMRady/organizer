@@ -10,6 +10,7 @@ export class PlaceComponent implements OnInit {
   places: any[];
   isLoading: boolean;
   form: FormGroup;
+  showEditor = false;
 
   constructor(private placeCrudSvc: PlaceCrudService, private fb: FormBuilder) {
     const max = 11;
@@ -36,26 +37,33 @@ export class PlaceComponent implements OnInit {
         () => this.isLoading = false);
   }
 
-  updateManually(place: any) {
-    this.form.patchValue({
-      _id: null,
-      name: '',
-      phone1: '',
-      phone2: '',
-      phone3: '',
-      address: ''
-    });
-    this.form.patchValue(place);
-  }
-
   save() {
     const place = this.form.value;
     const observable = place._id ? this.placeCrudSvc.edit(place) : this.placeCrudSvc.add(place);
+    observable.subscribe(() => this.getPlaces(), error => console.log(error), () => this.isLoading = false);
+  }
 
-    observable
-      .subscribe(
-        () => this.getPlaces(),
-        error => console.log(error),
-        () => this.isLoading = false);
+  startEdit(place: any) {
+    this.resetModel();
+    this.form.patchValue(place);
+    this.showForm();
+  }
+
+  private resetModel() {
+    this.form.patchValue({_id: null, name: '', phone1: '', phone2: '', phone3: '', address: ''});
+  }
+
+  showForm() {
+    this.showEditor = true;
+  }
+
+  startAdd() {
+    this.resetModel();
+    this.showForm();
+  }
+
+  hideAndResetForm() {
+    this.resetModel();
+    this.showEditor = false;
   }
 }

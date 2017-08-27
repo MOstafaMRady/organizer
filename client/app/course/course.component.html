@@ -1,0 +1,91 @@
+<br/>
+<div class="card">
+  <div class="card-header">
+    <h4>Courses</h4>
+  </div>
+  <div class="card-block">
+    <div style="margin-bottom: 10px;">
+      <button type="button" class="btn btn-secondary" (click)="startAdd()">Add Course</button>
+    </div>
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>Title</th>
+        <th>place</th>
+        <th>Cost</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let c of courses">
+        <td>
+          <div class="title">{{c.title}}</div>
+          <small class="text-muted">{{c.description}}</small>
+        </td>
+        <td>
+          <div class="title">
+            <a routerLink="/places">{{c.place.name}}</a></div>
+          <small class="text-muted">{{c.place.address}}</small>
+        </td>
+        <td>{{c.cost}}</td>
+        <td>
+          <button class="btn btn-success btn-sm" (click)="startEdit(c)">Edit</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div *ngIf="showEditor" class="card">
+  <div class="card-header">
+    <h5>Add course</h5>
+  </div>
+  <div class="card-block">
+    <form [formGroup]="form" (ngSubmit)="save()">
+      <div class="form-group row">
+        <label for="title" class="col-sm-2 col-form-label">
+          Title
+        </label>
+        <div class="col-sm-10">
+          <input class="form-control" id="title" formControlName="title">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="place" class="col-sm-2 col-form-label">
+          Place
+        </label>
+        <div class="col-sm-10">
+          <select formControlName="place" id="place" class="custom-select form-control">
+            <option *ngFor="let p of places" [value]="p._id">{{p.name}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="cost" class="col-sm-2 col-form-label">
+          Cost
+        </label>
+        <div class="col-sm-10">
+          <input class="form-control" id="cost" formControlName="cost">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="description" class="col-sm-2 col-form-label">
+          Description
+        </label>
+        <div class="col-sm-10">
+          <textarea class="form-control" id="description" formControlName="description"></textarea>
+        </div>
+      </div>
+
+      <hr>
+      <button class="btn btn-primary">Save</button>
+      <button type="button" class="btn btn-danger" (click)="hideAndResetForm()">Cancel</button>
+      <div>{{form.value|json}}</div>
+    </form>
+  </div>
+
+</div>
+
