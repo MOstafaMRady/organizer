@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, NgZone, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Place} from '../models/place/place.model';
 import {PlaceCrudService} from '../place/place-crud.service';
@@ -13,20 +13,30 @@ export class CourseComponent implements OnInit {
   places: Place[];
   courses: any[];
   showEditor: boolean;
+  @ViewChildren('titleElInput') titleElInput: QueryList<any>;
 
-  constructor(private fb: FormBuilder, private placeCrudService: PlaceCrudService, private courseCrud: CourseCrudService) {
+  constructor(private fb: FormBuilder, private placeCrudService: PlaceCrudService,
+              private courseCrud: CourseCrudService, private w: NgZone) {
   }
 
   ngOnInit() {
     this.getCourses();
-
-    this
-      .placeCrudService
+    this.placeCrudService
       .getPlaces()
       .subscribe(data => this.places = data,
         err => console.log(err));
 
-    this.form = this.fb.group({_id: [], place: [], title: ['', [Validators.required]], description: [], cost: []});
+    this.initForm();
+  }
+
+  private initForm() {
+    this.form = this.fb.group({
+      _id: [],
+      place: ['', Validators.required],
+      title: ['', [Validators.required]],
+      description: [],
+      cost: [null, Validators.required]
+    });
   }
 
   private getCourses() {
@@ -51,10 +61,17 @@ export class CourseComponent implements OnInit {
     this.form.patchValue(course);
     this.form.get('place').patchValue(course.place._id);
     this.showForm();
+    this.setFocusedEl();
   }
 
   private resetModel() {
-    this.form.patchValue({_id: null, place: '', title: '', description: '', cost: ''});
+    this.form.patchValue({
+      _id: null,
+      place: '',
+      title: '',
+      description: '',
+      cost: ''
+    });
   }
 
   showForm() {
@@ -64,6 +81,18 @@ export class CourseComponent implements OnInit {
   startAdd() {
     this.resetModel();
     this.showForm();
+    this.setFocusedEl();
+  }
+
+  setFocusedEl() {
+    this.w.runOutsideAngular(() => {
+      setTimeout(() => {
+        try {
+          this.titleElInput.first.nativeElement.focus();
+        } finally {
+        }
+      });
+    });
   }
 
   hideAndResetForm() {
