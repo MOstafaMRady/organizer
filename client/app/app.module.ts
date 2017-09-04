@@ -20,6 +20,7 @@ import {PlaceCrudService} from './place/place-crud.service';
 import {ReactiveFormsModule} from '@angular/forms';
 import {CourseComponent} from './course/course.component';
 import {CourseCrudService} from './course/course-crud.service';
+import { AttendeeComponent } from './attendee/attendee.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import {CourseCrudService} from './course/course-crud.service';
     AdminComponent,
     NotFoundComponent,
     PlaceComponent,
-    CourseComponent
+    CourseComponent,
+    AttendeeComponent,
   ],
   imports: [
     RoutingModule,
