@@ -32,6 +32,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.17.2",
     "bootstrap": "^4.0.0-beta",
+    "bootswatch": "^3.3.7",
     "core-js": "^2.5.0",
     "dotenv": "^4.0.0",
     "express": "^4.15.4",

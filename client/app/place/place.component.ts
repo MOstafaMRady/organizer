@@ -7,6 +7,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
   templateUrl: './place.component.html'
 })
 export class PlaceComponent implements OnInit {
+  formTitle: string;
   places: any[];
   isLoading: boolean;
   form: FormGroup;
@@ -44,6 +45,7 @@ export class PlaceComponent implements OnInit {
   }
 
   startEdit(place: any) {
+    this.formTitle = 'Edit Place';
     this.resetModel();
     this.form.patchValue(place);
     this.showForm();
@@ -58,6 +60,7 @@ export class PlaceComponent implements OnInit {
   }
 
   startAdd() {
+    this.formTitle = 'Add Place';
     this.resetModel();
     this.showForm();
   }
