@@ -1,103 +1,77 @@
-<br/>
-<div class="card">
-  <div class="card-header">
-    <h4>Courses</h4>
-  </div>
-  <div class="card-block">
-    <div style="margin-bottom: 10px;">
-      <button type="button" class="btn btn-secondary" (click)="startAdd()">Add Course</button>
+
+<div class="well" *ngIf="!showEditor">
+  <div class="card">
+    <div class="card-header">
+      <h3>Courses</h3>
     </div>
-    <table class="table table-hover">
-      <thead>
-      <tr>
-        <th>Title</th>
-        <th>place</th>
-        <th>Cost</th>
-        <th></th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let c of courses">
-        <td>
-          <div class="title">{{c.title}}</div>
-          <small class="text-muted">{{c.description}}</small>
-        </td>
-        <td>
-          <div class="title">
-            <a routerLink="/places">{{c.place.name}}</a></div>
-          <small class="text-muted">{{c.place.address}}</small>
-        </td>
-        <td>{{c.cost}}</td>
-        <td>
-          <button class="btn btn-success btn-sm" (click)="startEdit(c)">Edit</button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+    <div class="card-block">
+      <div>
+        <button type="button" class="btn btn-primary" (click)="startAdd()">Add Course</button>
+      </div>
+      <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+          <th>Title</th>
+          <th>place</th>
+          <th>Cost</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let c of courses">
+          <td>
+            <div class="title">{{c.title}}</div>
+            <small class="help-block">{{c.description}}</small>
+          </td>
+          <td>
+            <div class="title">
+              <a routerLink="/places">{{c.place.name}}</a></div>
+            <small class="help-block">{{c.place.address}}</small>
+          </td>
+          <td>{{c.cost}}</td>
+          <td>
+            <button class="btn btn-success btn-sm" (click)="startEdit(c)">Edit</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
-<div *ngIf="showEditor" class="card">
-  <div class="card-header">
-    <h5>Add course</h5>
-  </div>
-  <div class="card-block">
-    <form [formGroup]="form" (ngSubmit)="save()">
-
-      <div class="form-group row"
-           [ngClass]="{'has-danger':form.get('title').errors?.required && form.get('title').touched}">
-        <label for="title" class="col-sm-2 col-form-label"
-               [ngClass]="{'form-control-feedback':form.get('title').errors?.required}">
-          <em *ngIf="form.get('title').errors?.required" class="form-control-feedback">*</em>
-          Title
-        </label>
-
-        <div class="col-sm-10">
-          <input class="form-control" #titleElInput id="title" formControlName="title"
-                 [ngClass]="{'has-danger':form.get('title').errors?.required}">
+<div *ngIf="showEditor" class="well">
+  <div class="card">
+    <div class="card-header">
+      <h5>{{formTitle}}</h5>
+    </div>
+    <div class="card-block">
+      <form [formGroup]="form" (ngSubmit)="save()">
+        <div class="form-group"
+             [ngClass]="{'has-error':form.get('title').errors?.required && form.get('title').touched}">
+          <label for="title" class="control-label"> Title <em *ngIf="form.get('title').errors?.required">*</em></label>
+          <input class="form-control" #titleElInput id="title" formControlName="title">
         </div>
-
-      </div>
-
-      <div class="form-group row"
-           [ngClass]="{'has-danger':form.get('place').errors?.required && form.get('place').touched}">
-
-        <label for="place" class="col-sm-2 col-form-label"
-               [ngClass]="{'form-control-feedback':form.get('title').errors?.required}">
-          <em *ngIf="form.get('place').errors?.required" class="form-control-feedback">*</em>
-          Place
-        </label>
-
-        <div class="col-sm-10">
-          <select formControlName="place" id="place" class="custom-select form-control"
-                  [ngClass]="{'has-danger':form.get('place').errors?.required}">
+        <div class="form-group"
+             [ngClass]="{'has-error':form.get('place').errors?.required && form.get('place').touched}">
+          <label for="place" class="control-label"> Place <em *ngIf="form.get('place').errors?.required">*</em></label>
+          <select formControlName="place" id="place" class="form-control">
             <option *ngFor="let p of places" [value]="p._id">{{p.name}}</option>
           </select>
         </div>
-      </div>
-
-      <div class="form-group row">
-        <label for="cost" class="col-sm-2 col-form-label">
-          Cost
-        </label>
-        <div class="col-sm-10">
+        <div class="form-group" [ngClass]="{'has-error':form.get('cost').errors?.required && form.get('cost').touched}">
+          <label for="cost" class="control-label"> Cost <em *ngIf="form.get('cost').errors?.required">*</em></label>
           <input class="form-control" id="cost" formControlName="cost">
         </div>
-      </div>
-
-      <div class="form-group row">
-        <label for="description" class="col-sm-2 col-form-label">
-          Description
-        </label>
-        <div class="col-sm-10">
+        <div class="form-group">
+          <label for="description" class="control-label">
+            Description
+          </label>
           <textarea class="form-control" id="description" formControlName="description"></textarea>
         </div>
-      </div>
-
-      <hr>
-      <button class="btn btn-primary" [disabled]="form.invalid">Save</button>
-      <button type="button" class="btn btn-danger" (click)="hideAndResetForm()">Cancel</button>
-    </form>
+        <hr>
+        <button class="btn btn-primary" [disabled]="form.invalid">Save</button>
+        <button type="button" class="btn btn-danger" (click)="hideAndResetForm()">Cancel</button>
+      </form>
+    </div>
   </div>
-
 </div>
 

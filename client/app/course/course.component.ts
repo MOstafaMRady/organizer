@@ -9,6 +9,7 @@ import {CourseCrudService} from './course-crud.service';
   templateUrl: './course.component.html'
 })
 export class CourseComponent implements OnInit {
+  formTitle: string;
   form: FormGroup;
   places: Place[];
   courses: any[];
@@ -57,6 +58,7 @@ export class CourseComponent implements OnInit {
   }
 
   startEdit(course: any) {
+    this.formTitle = 'Edit course';
     this.resetModel();
     this.form.patchValue(course);
     this.form.get('place').patchValue(course.place._id);
@@ -79,6 +81,7 @@ export class CourseComponent implements OnInit {
   }
 
   startAdd() {
+    this.formTitle = 'Add course';
     this.resetModel();
     this.showForm();
     this.setFocusedEl();
