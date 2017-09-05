@@ -1,0 +1,44 @@
+<div class="well" *ngIf="!showEditor">
+  <div class="card">
+    <div class="card-header">
+      <h3>Attendees</h3>
+    </div>
+    <div class="card-block">
+      <div>
+        <button type="button" class="btn btn-primary" (click)="startAdd()">Add Course</button>
+      </div>
+      <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>gender</th>
+          <th>birthDate</th>
+          <th>phone1</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let c of attendees">
+          <td>{{getFullName(c)}}</td>
+          <td>{{c.gender}}</td>
+          <td>{{c.birthDate}}</td>
+          <td>{{c.phone1}}</td>
+          <td>
+            <button class="btn btn-success btn-sm" (click)="startEdit(c)">Edit</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div *ngIf="showEditor" class="well">
+  <div class="card">
+    <div class="card-header">
+      <h5>{{formTitle}}</h5>
+    </div>
+    <div class="card-block">
+      <app-attendee-editor (saved)="onSaved($event)" (cancelled)="onCancel()"></app-attendee-editor>
+    </div>
+  </div>
+</div>

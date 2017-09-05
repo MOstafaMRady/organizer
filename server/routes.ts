@@ -4,6 +4,7 @@ import CatCtrl from './controllers/cat';
 import UserCtrl from './controllers/user';
 import PlaceController from './controllers/place';
 import CourseController from './controllers/course';
+import AttendeeController from './controllers/attendee';
 
 export default function setRoutes(app) {
 
@@ -13,6 +14,15 @@ export default function setRoutes(app) {
   const userCtrl = new UserCtrl();
   const placeController = new PlaceController();
   const courseController = new CourseController();
+  const attendeeController = new AttendeeController();
+
+  // Attendees
+  router.route('/attendees').get(attendeeController.getAll);
+  router.route('/attendees/count').get(attendeeController.count);
+  router.route('/attendee').post(attendeeController.insert);
+  router.route('/attendee/:id').get(attendeeController.get);
+  router.route('/attendee/:id').put(attendeeController.update);
+  router.route('/attendee/:id').delete(attendeeController.delete);
 
   // Places
   router.route('/courses').get(courseController.getAll);

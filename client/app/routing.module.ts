@@ -12,7 +12,8 @@ import {NotFoundComponent} from './not-found/not-found.component';
 import {AuthGuardLogin} from './services/auth-guard-login.service';
 import {AuthGuardAdmin} from './services/auth-guard-admin.service';
 import {PlaceComponent} from './place/place.component';
-import {CourseComponent} from "./course/course.component";
+import {CourseComponent} from './course/course.component';
+import {AttendeeComponent} from './attendee/attendee.component';
 
 const routes: Routes = [
   {path: '', component: AboutComponent},
@@ -24,6 +25,7 @@ const routes: Routes = [
   {path: 'admin', component: AdminComponent, canActivate: [AuthGuardAdmin]},
   {path: 'places', component: PlaceComponent},
   {path: 'courses', component: CourseComponent},
+  {path: 'attendees', component: AttendeeComponent},
   {path: 'notfound', component: NotFoundComponent},
   {path: '**', redirectTo: '/notfound'},
 ];

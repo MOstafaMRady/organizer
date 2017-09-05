@@ -20,6 +20,10 @@ import {PlaceCrudService} from './place/place-crud.service';
 import {ReactiveFormsModule} from '@angular/forms';
 import {CourseComponent} from './course/course.component';
 import {CourseCrudService} from './course/course-crud.service';
+import {AttendeeComponent} from './attendee/attendee.component';
+import {DpDatePickerModule} from 'ng2-date-picker';
+import {AttendeeEditorComponent} from './attendee/attendee-editor.component';
+import {AttendeeCrudService} from './attendee/attendee-crud.service';
 
 @NgModule({
   declarations: [
@@ -33,12 +37,15 @@ import {CourseCrudService} from './course/course-crud.service';
     AdminComponent,
     NotFoundComponent,
     PlaceComponent,
-    CourseComponent
+    CourseComponent,
+    AttendeeComponent,
+    AttendeeEditorComponent
   ],
   imports: [
     RoutingModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DpDatePickerModule
   ],
   providers: [
     AuthService,
@@ -47,7 +54,8 @@ import {CourseCrudService} from './course/course-crud.service';
     CatService,
     UserService,
     PlaceCrudService,
-    CourseCrudService
+    CourseCrudService,
+    AttendeeCrudService
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
