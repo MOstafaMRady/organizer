@@ -24,6 +24,7 @@ import {AttendeeComponent} from './attendee/attendee.component';
 import {DpDatePickerModule} from 'ng2-date-picker';
 import {AttendeeEditorComponent} from './attendee/attendee-editor.component';
 import {AttendeeCrudService} from './attendee/attendee-crud.service';
+import {MomentModule} from 'angular2-moment';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import {AttendeeCrudService} from './attendee/attendee-crud.service';
     RoutingModule,
     SharedModule,
     ReactiveFormsModule,
-    DpDatePickerModule
+    DpDatePickerModule,
+    MomentModule
   ],
   providers: [
     AuthService,
