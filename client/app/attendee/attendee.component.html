@@ -39,7 +39,7 @@
       <h5>{{formTitle}}</h5>
     </div>
     <div class="card-block">
-      <app-attendee-editor (saved)="onSaved($event)" (cancelled)="onCancel()"></app-attendee-editor>
+      <app-attendee-editor [model]="selectedModel" (saved)="onSaved($event)" (cancelled)="onCancel()"></app-attendee-editor>
     </div>
   </div>
 </div>

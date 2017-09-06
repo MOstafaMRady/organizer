@@ -11,6 +11,7 @@ export class AttendeeComponent implements OnInit {
   formTitle: string;
   showEditor = false;
   attendees: any[];
+  selectedModel: any = null;
 
   constructor(private attendeeCrudSvc: AttendeeCrudService) {
   }
@@ -24,6 +25,7 @@ export class AttendeeComponent implements OnInit {
   }
 
   startAdd() {
+    this.selectedModel = null;
     this.formTitle = 'Add Attendee';
     this.showForm();
     // this.resetModel();
@@ -31,8 +33,10 @@ export class AttendeeComponent implements OnInit {
     // this.setFocusedEl();
   }
 
-  startEdit() {
+  startEdit(model: any) {
+    this.selectedModel = model;
     this.formTitle = 'Edit Attendee';
+    this.showForm();
   }
 
   save() {

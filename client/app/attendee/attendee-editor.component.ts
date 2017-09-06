@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {GenderData} from '../shared/gender-data.service';
 import {AttendeeCrudService} from './attendee-crud.service';
@@ -14,9 +14,15 @@ export class AttendeeEditorComponent {
   };
   genderData: string[];
   form: FormGroup;
+  selectedAttendee: any = null;
 
   @Output() saved = new EventEmitter();
   @Output() cancelled = new EventEmitter();
+
+  @Input()
+  set model(value: any) {
+    this.selectedAttendee = value;
+  }
 
   constructor(private fb: FormBuilder,
               private attendeeCrudSvc: AttendeeCrudService,
@@ -42,6 +48,7 @@ export class AttendeeEditorComponent {
   }
 
   cancel() {
+    this.selectedAttendee = null;
     this.cancelled.emit();
   }
 }
