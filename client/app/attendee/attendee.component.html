@@ -1,3 +1,7 @@
+<app-loading [condition]="isLoading"></app-loading>
+
+<app-toast [message]="toast.message"></app-toast>
+
 <div class="well" *ngIf="!showEditor">
   <div class="card">
     <div class="card-header">
@@ -20,9 +24,9 @@
         </thead>
         <tbody>
         <tr *ngFor="let c of attendees">
-          <td>{{getFullName(c)}}</td>
+          <td>{{c | fullName}}</td>
           <td>{{c.gender}}</td>
-          <td>{{c.birthDate}}</td>
+          <td>{{c.birthDate | date:'d/M/y'}}</td>
           <td>{{c.phone1}}</td>
           <td>
             <button class="btn btn-success btn-sm" (click)="startEdit(c)">Edit</button>
@@ -39,7 +43,8 @@
       <h5>{{formTitle}}</h5>
     </div>
     <div class="card-block">
-      <app-attendee-editor [model]="selectedModel" (saved)="onSaved($event)" (cancelled)="onCancel()"></app-attendee-editor>
+      <app-attendee-editor [model]="selectedModel" (saved)="onSaved($event)"
+                           (cancelled)="onCancel()"></app-attendee-editor>
     </div>
   </div>
 </div>

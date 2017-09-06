@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AttendeeCrudService} from './attendee-crud.service';
+import {ToastComponent} from '../shared/toast/toast.component';
 
 
 @Component({
@@ -8,16 +9,27 @@ import {AttendeeCrudService} from './attendee-crud.service';
 
 })
 export class AttendeeComponent implements OnInit {
+  isLoading = false;
   formTitle: string;
   showEditor = false;
   attendees: any[];
   selectedModel: any = null;
 
-  constructor(private attendeeCrudSvc: AttendeeCrudService) {
+  constructor(private attendeeCrudSvc: AttendeeCrudService, public toast: ToastComponent) {
   }
 
   ngOnInit() {
-    this.attendeeCrudSvc.getAll().subscribe(data => this.attendees = data);
+    this.getAttendees();
+  }
+
+  getAttendees() {
+    this.isLoading = true;
+    this.attendeeCrudSvc.getAll()
+      .subscribe(
+        data => this.attendees = data,
+        error => console.log(error),
+        () => this.isLoading = false
+      );
   }
 
   showForm() {
@@ -28,9 +40,7 @@ export class AttendeeComponent implements OnInit {
     this.selectedModel = null;
     this.formTitle = 'Add Attendee';
     this.showForm();
-    // this.resetModel();
     this.showForm();
-    // this.setFocusedEl();
   }
 
   startEdit(model: any) {
@@ -39,25 +49,14 @@ export class AttendeeComponent implements OnInit {
     this.showForm();
   }
 
-  save() {
-  }
-
   hideAndResetForm() {
     this.showEditor = false;
   }
 
-  onSaved(data) {
-    console.log(data);
+  onSaved() {
+    this.toast.setMessage('Item saved successfully.', 'success');
+    this.getAttendees();
     this.hideAndResetForm();
-  }
-
-  getFullName(attendee: any): string {
-    let fullName = `${attendee.firstName} `;
-    if (attendee.middleName && attendee.middleName.length > 0) {
-      fullName += `${attendee.middleName} `;
-    }
-    fullName += `${attendee.lastName}`;
-    return fullName;
   }
 
   onCancel() {

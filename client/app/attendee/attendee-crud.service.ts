@@ -15,10 +15,10 @@ export class AttendeeCrudService {
   }
 
   save(attendee: any): Observable<any> {
-    if (attendee._id) {
+    if (attendee._id && attendee._id.length > 5) {
       return this.http.put(`/api/attendee/${attendee._id}`, attendee, this.options);
     } else {
-      return this.http.post('/api/attendee', attendee, this.headers);
+      return this.http.post('/api/attendee', attendee, this.options);
     }
   }
 }

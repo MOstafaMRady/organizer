@@ -14,14 +14,15 @@ export class AttendeeEditorComponent {
   };
   genderData: string[];
   form: FormGroup;
-  selectedAttendee: any = null;
 
   @Output() saved = new EventEmitter();
   @Output() cancelled = new EventEmitter();
 
   @Input()
   set model(value: any) {
-    this.selectedAttendee = value;
+    this.form.patchValue(value);
+    const birthDateFormatted = moment(value.birthDate).format('DD/MM/YYYY');
+    this.form.get('birthDate').patchValue(birthDateFormatted);
   }
 
   constructor(private fb: FormBuilder,
@@ -30,6 +31,7 @@ export class AttendeeEditorComponent {
     this.config = {format: 'DD/MM/YYYY'};
     this.genderData = this.genderDataService.genderData;
     this.form = this.fb.group({
+      _id: [],
       firstName: ['', Validators.required],
       middleName: [''],
       lastName: ['', Validators.required],
@@ -43,12 +45,11 @@ export class AttendeeEditorComponent {
 
   save() {
     const attendee = this.form.value;
-    attendee.birthDate = moment(this.form.value.birthDate);
+    attendee.birthDate = moment(this.form.value.birthDate, 'DD/MM/YYYY').toDate();
     this.attendeeCrudSvc.save(attendee).subscribe((data) => this.saved.emit(data));
   }
 
   cancel() {
-    this.selectedAttendee = null;
     this.cancelled.emit();
   }
 }
