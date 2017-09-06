@@ -22,6 +22,11 @@ export class AttendeeEditorComponent {
   @Input()
   set model(value: any) {
     this.selectedAttendee = value;
+    this.form.patchValue(value);
+
+    const birthDateFormatted = moment(value.birthDate).format('DD/MM/YYYY');
+    console.log(birthDateFormatted);
+    this.form.get('birthDate').patchValue(birthDateFormatted);
   }
 
   constructor(private fb: FormBuilder,
