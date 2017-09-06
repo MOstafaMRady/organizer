@@ -25,6 +25,8 @@ import {DpDatePickerModule} from 'ng2-date-picker';
 import {AttendeeEditorComponent} from './attendee/attendee-editor.component';
 import {AttendeeCrudService} from './attendee/attendee-crud.service';
 import {MomentModule} from 'angular2-moment';
+import {FullNamePipe} from './shared/pipes/full-name.pipe';
+
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import {MomentModule} from 'angular2-moment';
     PlaceComponent,
     CourseComponent,
     AttendeeComponent,
-    AttendeeEditorComponent
+    AttendeeEditorComponent,
+    FullNamePipe
   ],
   imports: [
     RoutingModule,

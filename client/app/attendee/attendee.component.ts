@@ -18,15 +18,6 @@ export class AttendeeComponent implements OnInit {
   constructor(private attendeeCrudSvc: AttendeeCrudService, public toast: ToastComponent) {
   }
 
-  getFullName(attendee: any): string {
-    let fullName = `${attendee.firstName} `;
-    if (attendee.middleName && attendee.middleName.length > 0) {
-      fullName += `${attendee.middleName} `;
-    }
-    fullName += `${attendee.lastName}`;
-    return fullName;
-  }
-
   ngOnInit() {
     this.getAttendees();
   }
@@ -49,9 +40,7 @@ export class AttendeeComponent implements OnInit {
     this.selectedModel = null;
     this.formTitle = 'Add Attendee';
     this.showForm();
-    // this.resetModel();
     this.showForm();
-    // this.setFocusedEl();
   }
 
   startEdit(model: any) {
@@ -65,7 +54,7 @@ export class AttendeeComponent implements OnInit {
   }
 
   onSaved() {
-    this.toast.setMessage('Item added successfully.', 'success');
+    this.toast.setMessage('Item saved successfully.', 'success');
     this.getAttendees();
     this.hideAndResetForm();
   }
