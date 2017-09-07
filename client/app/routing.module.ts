@@ -14,6 +14,7 @@ import {AuthGuardAdmin} from './services/auth-guard-admin.service';
 import {PlaceComponent} from './place/place.component';
 import {CourseComponent} from './course/course.component';
 import {AttendeeComponent} from './attendee/attendee.component';
+import {GroupComponent} from './group/group.component';
 
 const routes: Routes = [
   {path: '', component: AboutComponent},
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path: 'admin', component: AdminComponent, canActivate: [AuthGuardAdmin]},
   {path: 'places', component: PlaceComponent},
   {path: 'courses', component: CourseComponent},
+  {path: 'groups', component: GroupComponent},
   {path: 'attendees', component: AttendeeComponent},
   {path: 'notfound', component: NotFoundComponent},
   {path: '**', redirectTo: '/notfound'},

@@ -26,6 +26,8 @@ import {AttendeeEditorComponent} from './attendee/attendee-editor.component';
 import {AttendeeCrudService} from './attendee/attendee-crud.service';
 import {MomentModule} from 'angular2-moment';
 import {FullNamePipe} from './shared/pipes/full-name.pipe';
+import {GroupComponent} from './group/group.component';
+import {GroupEditorComponent} from './group/group-editor.component';
 
 
 @NgModule({
@@ -43,7 +45,9 @@ import {FullNamePipe} from './shared/pipes/full-name.pipe';
     CourseComponent,
     AttendeeComponent,
     AttendeeEditorComponent,
-    FullNamePipe
+    FullNamePipe,
+    GroupComponent,
+    GroupEditorComponent
   ],
   imports: [
     RoutingModule,

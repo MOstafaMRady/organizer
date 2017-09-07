@@ -1,0 +1,43 @@
+<form [formGroup]="form" (ngSubmit)="save()">
+  <div class="form-group"
+       [ngClass]="{'has-error':form.get('name').errors?.required && form.get('name').touched}">
+    <label for="name" class="control-label"> Name <em *ngIf="form.get('name').errors?.required">*</em></label>
+    <input class="form-control" id="name" formControlName="name">
+  </div>
+  <div class="form-group">
+    <label for="course" class="control-label"> Course</label>
+    <select id="course" class="form-control" formControlName="course">
+      <option *ngFor="let c of cousrses" [value]="c._id">{{c.title}}</option>
+    </select>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group">
+        <label for="attendee" class="control-label"> Attendees</label>
+        <select id="attendee" class="form-control" formControlName="selectedAttendee">
+          <option *ngFor="let a of attendees" [value]="a._id">{{a | fullName}}</option>
+        </select>
+
+        <button type="button" class="btn btn-primary" (click)="addToSelected()"><i
+          class="fa fa-plus-circle"></i> Add
+        </button>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div *ngIf="selectedAttendees.length > 0">
+        <label>
+          Attendees <span class="badge badge-primary">{{selectedAttendees.length}}</span>
+        </label>
+        <table class="table table-hover table-bordered">
+          <tbody>
+          <tr *ngFor="let a of selectedAttendees;index as idx">
+            <td>{{idx+1}}</td>
+            <td>{{a | fullName}}</td>
+          </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+</form>
