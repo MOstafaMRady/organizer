@@ -1,7 +1,7 @@
 <app-loading [condition]="isLoading"></app-loading>
 
 <app-toast [message]="toast.message"></app-toast>
-
+<br>
 <div class="well" *ngIf="!showEditor">
   <div class="card">
     <div class="card-header">
@@ -12,7 +12,7 @@
         <button type="button" class="btn btn-primary" (click)="startAdd()">Add Attendee</button>
       </div>
       <hr>
-      <table class="table table-bordered table-hover">
+      <table class="table table-bordered tab-content table-responsive table-hover">
         <thead>
         <tr>
           <th>Name</th>
@@ -38,13 +38,7 @@
   </div>
 </div>
 <div *ngIf="showEditor" class="well">
-  <div class="card">
-    <div class="card-header">
-      <h5>{{formTitle}}</h5>
-    </div>
-    <div class="card-block">
-      <app-attendee-editor [model]="selectedModel" (saved)="onSaved($event)"
-                           (cancelled)="onCancel()"></app-attendee-editor>
-    </div>
-  </div>
+  <app-attendee-editor [model]="selectedModel" (saved)="onSaved($event)"
+                       (cancelled)="onCancel()"></app-attendee-editor>
+
 </div>

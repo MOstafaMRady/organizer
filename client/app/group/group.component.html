@@ -1,42 +1,54 @@
+<br>
 <div class="well" *ngIf="!showEditor">
-  <h3>Groups</h3>
-  <div class="row">
-    <div class="col-sm-12">
-      <button class="btn btn-primary" (click)="startAdd()">Add Group</button>
+  <div class="card">
+    <div class="card-header">
+      <h3>Groups</h3>
     </div>
-  </div>
-  <hr>
-  <div class="row">
-    <div class="col-sm-12">
-      <table class="table table-hover">
-        <thead>
-        <tr>
-          <td>Group Name</td>
-          <td>Course</td>
-          <td>Place</td>
-          <td>Attendees</td>
-          <td></td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let g of groups">
-          <td>{{g.name}}</td>
-          <td>{{g.course.title}}</td>
-          <td>{{g.course.place.name}}</td>
-          <td>
-            <ol *ngIf="g.attendees && g.attendees.length > 0">
-              <li *ngFor="let a of g.attendees">{{a | fullName}}</li>
-            </ol>
-          </td>
-          <td>
-            <button class="btn btn-success btn-xs" (click)="startEdit(g)">Edit</button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+    <div class="card-block">
+      <div class="row">
+        <div class="col-sm-12">
+          <button class="btn btn-primary" (click)="startAdd()">Add Group</button>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-sm-12">
+          <table class="table table-bordered tab-content table-responsive">
+            <thead>
+            <tr>
+              <td>Group Name</td>
+              <td>Course</td>
+              <td>Place</td>
+              <td>Attendees</td>
+              <td></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let g of groups">
+              <td>{{g.name}}</td>
+              <td>{{g.course.title}}</td>
+              <td>{{g.course.place.name}}</td>
+              <td [title]="g.attendees |attendeesJoin">
+                {{g.attendees.length}}
+              </td>
+              <td>
+                <button class="btn btn-secondary card-header" (click)="startEdit(g)"><i class="fa fa-edit fa-lg"></i>
+                </button>
+                <button class="btn btn-secondary card-header" (click)="deleteGroup(g)"><i
+                  class="fa fa-remove fa-lg"></i>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+
+
 <div *ngIf="showEditor">
-  <app-group-editor (cancelledListener)="onCancel()" (itemSaved)="onSave()" [selectedModel]="selectedModel"></app-group-editor>
+  <app-group-editor (cancelledListener)="onCancel()" (itemSaved)="onSave()"
+                    [selectedModel]="selectedModel"></app-group-editor>
 </div>

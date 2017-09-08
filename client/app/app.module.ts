@@ -29,6 +29,8 @@ import {FullNamePipe} from './shared/pipes/full-name.pipe';
 import {GroupComponent} from './group/group.component';
 import {GroupEditorComponent} from './group/group-editor.component';
 import {GroupCrudService} from './group/group-crud.service';
+import {AttendeesJoinPipe} from './shared/pipes/attendees-join.pipe';
+import {AttendeeFullNameService} from './shared/pipes/attendee-full-name.service';
 
 
 @NgModule({
@@ -47,6 +49,7 @@ import {GroupCrudService} from './group/group-crud.service';
     AttendeeComponent,
     AttendeeEditorComponent,
     FullNamePipe,
+    AttendeesJoinPipe,
     GroupComponent,
     GroupEditorComponent
   ],
@@ -66,7 +69,8 @@ import {GroupCrudService} from './group/group-crud.service';
     PlaceCrudService,
     CourseCrudService,
     AttendeeCrudService,
-    GroupCrudService
+    GroupCrudService,
+    AttendeeFullNameService
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
