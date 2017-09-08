@@ -17,6 +17,7 @@ export class AttendeeEditorComponent {
 
   @Output() saved = new EventEmitter();
   @Output() cancelled = new EventEmitter();
+  @Output() itemSaved = new EventEmitter();
 
   @Input()
   set model(value: any) {
@@ -47,6 +48,7 @@ export class AttendeeEditorComponent {
     const attendee = this.form.value;
     attendee.birthDate = moment(this.form.value.birthDate, 'DD/MM/YYYY').toDate();
     this.attendeeCrudSvc.save(attendee).subscribe((data) => this.saved.emit(data));
+    this.itemSaved.emit();
   }
 
   cancel() {
