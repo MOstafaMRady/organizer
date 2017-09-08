@@ -15,11 +15,16 @@ export class GroupCrudService {
   }
 
   save(group: any) {
-    if (group._id) {
+    if (group._id && group._id.length > 5) {
       return this.http.put(`/api/group/${group._id}`, group, this.options);
     } else {
+      delete group._id;
       return this.http.post('/api/group', group, this.headers);
     }
+  }
+
+  remove(_id) {
+    return this.http.delete('/api/group/' + _id, this.options);
   }
 }
 

@@ -18,7 +18,8 @@ export class GroupComponent implements OnInit {
   }
 
   private getGroups() {
-    this.crud.getAll().subscribe((data: any[]) => this.groups = data);
+    this.crud.getAll()
+      .subscribe((data: any[]) => this.groups = data);
   }
 
   startAdd() {
@@ -28,6 +29,10 @@ export class GroupComponent implements OnInit {
   startEdit(model: any) {
     this.showEditor = true;
     this.selectedModel = model;
+  }
+
+  deleteGroup(model: any) {
+    this.crud.remove(model._id).subscribe(() => this.getGroups(), err => console.log(err));
   }
 
   onCancel() {

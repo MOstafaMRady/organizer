@@ -1,24 +1,24 @@
-
+<br>
 <div class="well" *ngIf="!showEditor">
   <div class="card">
     <div class="card-header">
       <h3>Courses</h3>
     </div>
     <div class="card-block">
-      <div>
-        <button type="button" class="btn btn-primary" (click)="startAdd()">Add Course</button>
-      </div>
-      <table class="table table-bordered table-hover">
+      <table class="table tab-content table-hover table-responsive">
         <thead>
-        <tr>
+        <tr class="card-header">
+          <th><button type="button" class="btn btn-outline-primary" (click)="startAdd()"><i class="fa fa-plus-circle fa-2x"></i></button></th>
           <th>Title</th>
           <th>place</th>
           <th>Cost</th>
-          <th></th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let c of courses">
+          <td>
+            <button class="btn btn-secondary" (click)="startEdit(c)"><i class="fa fa-edit fa-lg"></i></button>
+          </td>
           <td>
             <div class="title">{{c.title}}</div>
             <small class="help-block">{{c.description}}</small>
@@ -29,9 +29,6 @@
             <small class="help-block">{{c.place.address}}</small>
           </td>
           <td>{{c.cost}}</td>
-          <td>
-            <button class="btn btn-success btn-sm" (click)="startEdit(c)">Edit</button>
-          </td>
         </tr>
         </tbody>
       </table>

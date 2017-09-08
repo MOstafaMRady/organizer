@@ -28,6 +28,9 @@ import {MomentModule} from 'angular2-moment';
 import {FullNamePipe} from './shared/pipes/full-name.pipe';
 import {GroupComponent} from './group/group.component';
 import {GroupEditorComponent} from './group/group-editor.component';
+import {GroupCrudService} from './group/group-crud.service';
+import {AttendeesJoinPipe} from './shared/pipes/attendees-join.pipe';
+import {AttendeeFullNameService} from './shared/pipes/attendee-full-name.service';
 
 
 @NgModule({
@@ -46,6 +49,7 @@ import {GroupEditorComponent} from './group/group-editor.component';
     AttendeeComponent,
     AttendeeEditorComponent,
     FullNamePipe,
+    AttendeesJoinPipe,
     GroupComponent,
     GroupEditorComponent
   ],
@@ -64,7 +68,9 @@ import {GroupEditorComponent} from './group/group-editor.component';
     UserService,
     PlaceCrudService,
     CourseCrudService,
-    AttendeeCrudService
+    AttendeeCrudService,
+    GroupCrudService,
+    AttendeeFullNameService
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]

@@ -17,8 +17,9 @@ export class GroupEditorComponent implements OnInit {
   courses: any[] = [];
   selectedAttendees: any[] = [];
   @Output() cancelledListener = new EventEmitter();
+  @Output() itemSaved = new EventEmitter();
   @Input() selectedModel: any;
-
+  title = '';
   constructor(private fb: FormBuilder,
               private crud: GroupCrudService,
               private attendeeCrud: AttendeeCrudService,
@@ -34,18 +35,21 @@ export class GroupEditorComponent implements OnInit {
   }
 
   prepareForm() {
+    this.title = 'Add Group';
     this.form = this.fb.group({
+      _id: [''],
       name: ['', Validators.required],
       selectedAttendee: [''],
       place: [''],
       course: ['', Validators.required]
     });
     if (this.selectedModel) {
+      this.title = 'Edit Group';
+      this.form.get('_id').patchValue(this.selectedModel._id);
       this.form.get('name').patchValue(this.selectedModel.name);
       this.form.get('place').patchValue(this.selectedModel.course.place._id);
       this.selectedAttendees = this.selectedModel.attendees;
       this.form.get('course').patchValue(this.selectedModel.course._id);
-
     }
   }
 
@@ -76,8 +80,7 @@ export class GroupEditorComponent implements OnInit {
   save() {
     const group = this.form.value;
     group.attendees = this.selectedAttendees.map((m: any) => m._id);
-    console.log(group);
-    this.crud.save(group).subscribe(() => alert('saved'));
+    this.crud.save(group).subscribe(() => this.itemSaved.emit());
   }
 
   addToSelected() {
@@ -96,6 +99,7 @@ export class GroupEditorComponent implements OnInit {
   }
 
   onCancel() {
+    this.selectedModel = null;
     this.cancelledListener.emit();
   }
 

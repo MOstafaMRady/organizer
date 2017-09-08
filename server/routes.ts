@@ -5,6 +5,7 @@ import UserCtrl from './controllers/user';
 import PlaceController from './controllers/place';
 import CourseController from './controllers/course';
 import AttendeeController from './controllers/attendee';
+import GroupController from './controllers/group';
 
 export default function setRoutes(app) {
 
@@ -15,6 +16,15 @@ export default function setRoutes(app) {
   const placeController = new PlaceController();
   const courseController = new CourseController();
   const attendeeController = new AttendeeController();
+  const groupController = new GroupController();
+
+  // Attendees
+  router.route('/groups').get(groupController.getAll);
+  router.route('/groups/count').get(groupController.count);
+  router.route('/group').post(groupController.insert);
+  router.route('/group/:id').get(groupController.get);
+  router.route('/group/:id').put(groupController.update);
+  router.route('/group/:id').delete(groupController.delete);
 
   // Attendees
   router.route('/attendees').get(attendeeController.getAll);

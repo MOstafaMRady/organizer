@@ -14,12 +14,18 @@ export class AttendeeEditorComponent {
   };
   genderData: string[];
   form: FormGroup;
-
+  title = '';
   @Output() saved = new EventEmitter();
   @Output() cancelled = new EventEmitter();
+  @Output() itemSaved = new EventEmitter();
 
   @Input()
   set model(value: any) {
+    if (!value) {
+      this.title = 'Add Attendee';
+      return;
+    }
+    this.title = 'Edit Attendee';
     this.form.patchValue(value);
     const birthDateFormatted = moment(value.birthDate).format('DD/MM/YYYY');
     this.form.get('birthDate').patchValue(birthDateFormatted);
@@ -41,12 +47,14 @@ export class AttendeeEditorComponent {
       phone2: [],
       address: []
     });
+    this.title = 'Add Attendee';
   }
 
   save() {
     const attendee = this.form.value;
     attendee.birthDate = moment(this.form.value.birthDate, 'DD/MM/YYYY').toDate();
     this.attendeeCrudSvc.save(attendee).subscribe((data) => this.saved.emit(data));
+    this.itemSaved.emit();
   }
 
   cancel() {
