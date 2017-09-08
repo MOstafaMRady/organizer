@@ -31,7 +31,7 @@
               <td>{{g.name}}</td>
               <td>{{g.course.title}}</td>
               <td>{{g.course.place.name}}</td>
-              <td [title]="g.attendees |attendeesJoin">
+              <td [title]=" g.attendees | attendeesJoin">
                 {{g.attendees.length}}
               </td>
             </tr>

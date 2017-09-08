@@ -20,6 +20,7 @@ export class GroupEditorComponent implements OnInit {
   @Output() itemSaved = new EventEmitter();
   @Input() selectedModel: any;
   title = '';
+
   constructor(private fb: FormBuilder,
               private crud: GroupCrudService,
               private attendeeCrud: AttendeeCrudService,
@@ -40,9 +41,10 @@ export class GroupEditorComponent implements OnInit {
       _id: [''],
       name: ['', Validators.required],
       selectedAttendee: [''],
-      place: [''],
+      place: ['', Validators.required],
       course: ['', Validators.required]
     });
+
     if (this.selectedModel) {
       this.title = 'Edit Group';
       this.form.get('_id').patchValue(this.selectedModel._id);
@@ -91,7 +93,7 @@ export class GroupEditorComponent implements OnInit {
     }
   }
 
-  filterCoursesByPlace(placeId: any): any[] {
+  filterCoursesByPlace(placeId?: any): any[] {
     if (!placeId) {
       return [];
     }
