@@ -20,7 +20,8 @@
       "prefix": "app",
       "styles": [
         "../client/x-css/superhero-bootstrap.css",
-        "../node_modules/font-awesome/css/font-awesome.css"
+        "../node_modules/font-awesome/css/font-awesome.css",
+        "../client/x-css/modify.css"
       ],
       "scripts": [
         "../node_modules/popper.js/dist/umd/popper.min.js",

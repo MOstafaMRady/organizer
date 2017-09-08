@@ -8,29 +8,28 @@
       <h3>Attendees</h3>
     </div>
     <div class="card-block">
-      <div>
-        <button type="button" class="btn btn-primary" (click)="startAdd()">Add Attendee</button>
-      </div>
-      <hr>
-      <table class="table table-bordered tab-content table-responsive table-hover">
+      <table class="table tab-content table-hover table-responsive">
         <thead>
-        <tr>
+        <tr class="card-header">
+          <th>
+            <button type="button" class="btn btn-outline-primary" (click)="startAdd()"><i class="fa fa-plus-circle fa-2x"></i></button>
+          </th>
           <th>Name</th>
           <th>gender</th>
           <th>birthDate</th>
           <th>phone1</th>
-          <th></th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let c of attendees">
+          <td>
+            <button class="btn btn-secondary" (click)="startEdit(c)"><i class="fa fa-edit fa-lg"></i></button>
+          </td>
           <td>{{c | fullName}}</td>
           <td>{{c.gender}}</td>
           <td>{{c.birthDate | date:'d/M/y'}}</td>
           <td>{{c.phone1}}</td>
-          <td>
-            <button class="btn btn-success btn-sm" (click)="startEdit(c)">Edit</button>
-          </td>
+
         </tr>
         </tbody>
       </table>

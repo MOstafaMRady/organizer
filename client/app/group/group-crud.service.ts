@@ -18,6 +18,7 @@ export class GroupCrudService {
     if (group._id && group._id.length > 5) {
       return this.http.put(`/api/group/${group._id}`, group, this.options);
     } else {
+      delete group._id;
       return this.http.post('/api/group', group, this.headers);
     }
   }

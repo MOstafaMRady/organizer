@@ -7,36 +7,32 @@
     <div class="card-block">
       <div class="row">
         <div class="col-sm-12">
-          <button class="btn btn-primary" (click)="startAdd()">Add Group</button>
-        </div>
-      </div>
-      <hr>
-      <div class="row">
-        <div class="col-sm-12">
-          <table class="table table-bordered tab-content table-responsive">
+          <table class="table tab-content table-hover table-responsive">
             <thead>
-            <tr>
+            <tr class="card-header">
+              <td>
+                <button class="btn btn-outline-primary" (click)="startAdd()"><i class="fa fa-plus-circle fa-2x"></i>
+                </button>
+              </td>
               <td>Group Name</td>
               <td>Course</td>
               <td>Place</td>
               <td>Attendees</td>
-              <td></td>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let g of groups">
+              <td>
+                <button class="btn btn-secondary" (click)="startEdit(g)"><i class="fa fa-edit"></i>
+                </button>
+                <button class="btn btn-secondary" (click)="deleteGroup(g)"><i class="fa fa-remove"></i>
+                </button>
+              </td>
               <td>{{g.name}}</td>
               <td>{{g.course.title}}</td>
               <td>{{g.course.place.name}}</td>
               <td [title]="g.attendees |attendeesJoin">
                 {{g.attendees.length}}
-              </td>
-              <td>
-                <button class="btn btn-secondary card-header" (click)="startEdit(g)"><i class="fa fa-edit fa-lg"></i>
-                </button>
-                <button class="btn btn-secondary card-header" (click)="deleteGroup(g)"><i
-                  class="fa fa-remove fa-lg"></i>
-                </button>
               </td>
             </tr>
             </tbody>
@@ -46,8 +42,6 @@
     </div>
   </div>
 </div>
-
-
 <div *ngIf="showEditor">
   <app-group-editor (cancelledListener)="onCancel()" (itemSaved)="onSave()"
                     [selectedModel]="selectedModel"></app-group-editor>
