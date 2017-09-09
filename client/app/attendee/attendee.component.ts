@@ -15,7 +15,9 @@ export class AttendeeComponent implements OnInit {
   attendees: any[];
   selectedModel: any = null;
 
-  constructor(private attendeeCrudSvc: AttendeeCrudService, public toast: ToastComponent, private groupCrud: GroupCrudService) {
+  constructor(private attendeeCrudSvc: AttendeeCrudService,
+              public toast: ToastComponent,
+              private groupCrud: GroupCrudService) {
   }
 
   ngOnInit() {

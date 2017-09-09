@@ -69,6 +69,7 @@ abstract class BaseCtrl {
 
   // Delete by id
   delete = (req, res) => {
+    console.log('by base');
     this.model.findOneAndRemove({_id: req.params.id}, (err) => {
       if (err) {
         return console.error(err);

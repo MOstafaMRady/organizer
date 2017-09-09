@@ -16,10 +16,14 @@ export class PlaceCrudService {
   }
 
   add(place: any): Observable<any> {
-    return this.http.post('/api/place', place, this.headers);
+    return this.http.post('/api/place', place);
   }
 
   edit(place: any) {
-    return this.http.put(`/api/place/${place._id}`, place, this.headers);
+    return this.http.put(`/api/place/${place._id}`, place);
+  }
+
+  deletePlace(id: any): Observable<any> {
+    return this.http.delete(`/api/place/${id}/checkAndDelete`);
   }
 }

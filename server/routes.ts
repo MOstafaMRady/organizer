@@ -34,7 +34,7 @@ export default function setRoutes(app) {
   router.route('/attendee/:id').put(attendeeController.update);
   router.route('/attendee/:id').delete(attendeeController.delete);
 
-  // Places
+  // Courses
   router.route('/courses').get(courseController.getAll);
   router.route('/courses/count').get(courseController.count);
   router.route('/course').post(courseController.insert);
@@ -49,6 +49,7 @@ export default function setRoutes(app) {
   router.route('/place/:id').get(placeController.get);
   router.route('/place/:id').put(placeController.update);
   router.route('/place/:id').delete(placeController.delete);
+  router.route('/place/:id/checkAndDelete').delete(placeController.checkAndDelete);
 
   // Cats
   router.route('/cats').get(catCtrl.getAll);
