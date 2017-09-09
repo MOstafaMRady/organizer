@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AttendeeCrudService} from './attendee-crud.service';
 import {ToastComponent} from '../shared/toast/toast.component';
-
+import {GroupCrudService} from '../group/group-crud.service';
 
 @Component({
   selector: 'app-attendee',
@@ -15,7 +15,7 @@ export class AttendeeComponent implements OnInit {
   attendees: any[];
   selectedModel: any = null;
 
-  constructor(private attendeeCrudSvc: AttendeeCrudService, public toast: ToastComponent) {
+  constructor(private attendeeCrudSvc: AttendeeCrudService, public toast: ToastComponent, private groupCrud: GroupCrudService) {
   }
 
   ngOnInit() {
@@ -61,5 +61,15 @@ export class AttendeeComponent implements OnInit {
 
   onCancel() {
     this.showEditor = false;
+  }
+
+  deleteAttendee(_id: any) {
+    this.groupCrud.checkCanDelete(_id).subscribe((count: number) => {
+      if (count < 1) {
+        this.attendeeCrudSvc.deleteAttendee(_id).subscribe(() => this.getAttendees());
+      } else {
+        this.toast.setMessage('Can\'t remove, is joining (' + count + ') group(s)!', 'danger');
+      }
+    });
   }
 }

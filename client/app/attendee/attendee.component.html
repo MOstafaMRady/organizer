@@ -12,7 +12,8 @@
         <thead>
         <tr class="card-header">
           <th>
-            <button type="button" class="btn btn-outline-primary" (click)="startAdd()"><i class="fa fa-plus-circle fa-2x"></i></button>
+            <button type="button" class="btn btn-outline-primary" (click)="startAdd()"><i
+              class="fa fa-plus-circle fa-2x"></i></button>
           </th>
           <th>Name</th>
           <th>gender</th>
@@ -24,12 +25,13 @@
         <tr *ngFor="let c of attendees">
           <td>
             <button class="btn btn-secondary" (click)="startEdit(c)"><i class="fa fa-edit fa-lg"></i></button>
+            <button class="btn btn-secondary" (click)="deleteAttendee(c._id)"><i class="fa fa-remove fa-lg"></i>
+            </button>
           </td>
           <td>{{c | fullName}}</td>
           <td>{{c.gender}}</td>
           <td>{{c.birthDate | date:'d/M/y'}}</td>
           <td>{{c.phone1}}</td>
-
         </tr>
         </tbody>
       </table>

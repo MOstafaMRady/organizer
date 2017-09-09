@@ -21,4 +21,8 @@ export class AttendeeCrudService {
       return this.http.post('/api/attendee', attendee, this.options);
     }
   }
+
+  deleteAttendee(_id: any) {
+    return this.http.delete(`/api/attendee/${_id}`);
+  }
 }

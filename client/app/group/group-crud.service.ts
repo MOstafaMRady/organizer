@@ -26,5 +26,9 @@ export class GroupCrudService {
   remove(_id) {
     return this.http.delete('/api/group/' + _id, this.options);
   }
+
+  checkCanDelete(id): Observable<number> {
+    return this.http.get('/api/attendee/group/count/' + id).map(res => res.json());
+  }
 }
 

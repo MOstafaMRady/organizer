@@ -13,4 +13,17 @@ export default class GroupController extends BaseCtrl {
         res.json(docs);
       }).populate({path: 'course', populate: {path: 'place'}}).populate('attendees');
   }
+
+  getAttendeeGroups = (req, res) => {
+    const id = req.params.id;
+    this.model
+      .count({
+        attendees:{$in: [id]}
+      }, (err, docs) => {
+        if (err) {
+          return console.error(err);
+        }
+        res.json(docs);
+      });
+  }
 }
