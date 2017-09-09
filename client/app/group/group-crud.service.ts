@@ -5,7 +5,7 @@ import {Observable} from 'rxjs/Observable';
 @Injectable()
 export class GroupCrudService {
   private headers = new Headers({'Content-Type': 'application/json', 'charset': 'UTF-8'});
-  private options = new RequestOptions(this.headers);
+  private options = new RequestOptions({headers: this.headers});
 
   constructor(private http: Http) {
   }
@@ -19,7 +19,7 @@ export class GroupCrudService {
       return this.http.put(`/api/group/${group._id}`, group, this.options);
     } else {
       delete group._id;
-      return this.http.post('/api/group', group, this.headers);
+      return this.http.post('/api/group', group, this.options);
     }
   }
 

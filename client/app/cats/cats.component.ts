@@ -6,8 +6,7 @@ import {ToastComponent} from '../shared/toast/toast.component';
 
 @Component({
   selector: 'app-cats',
-  templateUrl: './cats.component.html',
-  styleUrls: ['./cats.component.scss']
+  templateUrl: './cats.component.html'
 })
 export class CatsComponent implements OnInit {
 

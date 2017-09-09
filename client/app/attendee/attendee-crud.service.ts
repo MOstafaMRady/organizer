@@ -5,7 +5,7 @@ import {Observable} from 'rxjs/Observable';
 @Injectable()
 export class AttendeeCrudService {
   private headers = new Headers({'Content-Type': 'application/json', 'charset': 'UTF-8'});
-  private options = new RequestOptions(this.headers);
+  private options = new RequestOptions({headers: this.headers});
 
   constructor(private http: Http) {
   }
