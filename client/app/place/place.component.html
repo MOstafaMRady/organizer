@@ -97,9 +97,9 @@
           </div>
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" [ngClass]="{'has-danger':form.get('address')?.invalid && form.get('address').touched}">
         <label for="address" class="form-control-label">Address</label>
-        <textarea class="form-control" id="address" formControlName="address"></textarea>
+        <textarea [ngClass]="{'invalid':form.get('address')?.invalid}" class="form-control" id="address" formControlName="address"></textarea>
       </div>
       <hr>
       <button [disabled]="form.invalid" class="btn btn-primary">Save</button>
