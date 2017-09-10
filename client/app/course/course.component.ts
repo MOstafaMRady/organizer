@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Place} from '../models/place/place.model';
 import {PlaceCrudService} from '../place/place-crud.service';
 import {CourseCrudService} from './course-crud.service';
+import {CustomValidators} from "ng2-validation";
 
 @Component({
   selector: 'app-course',
@@ -36,7 +37,7 @@ export class CourseComponent implements OnInit {
       place: ['', Validators.required],
       title: ['', [Validators.required]],
       description: [],
-      cost: [null, Validators.required]
+      cost: [null, [Validators.required, CustomValidators.number, CustomValidators.min(0)]]
     });
   }
 
