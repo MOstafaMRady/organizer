@@ -63,10 +63,10 @@ export class PlaceComponent implements OnInit {
   delete(id: any) {
     this.isLoading = true;
     this.placeCrudSvc.deletePlace(id).subscribe((res) => {
-      debugger;
       this.toast.setMessage('Place removed successfully', 'success');
+      this.getPlaces();
     }, (err => {
-      debugger;
+      console.log(err);
     }), () => this.isLoading = false);
   }
 
