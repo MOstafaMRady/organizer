@@ -25,7 +25,10 @@ export default class PlaceController extends BaseCtrl {
           res.sendStatus(200);
         });
       } else {
-        return res.json('cannot delete resource is in use');
+        return res.status(409).json({
+          success: false,
+          msg: `Course(s) ( ${(courses.map(x => x.title)).join()} ) - should be deleted first.`
+        });
       }
     });
   }

@@ -60,14 +60,20 @@ export class PlaceComponent implements OnInit {
     this.showForm();
   }
 
-  delete(id: any) {
+  deletePlace(id: any) {
     this.isLoading = true;
     this.placeCrudSvc.deletePlace(id).subscribe((res) => {
-      this.toast.setMessage('Place removed successfully', 'success');
-      this.getPlaces();
+      if (res.statusCode === 200) {
+        this.toast.setMessage('Place removed successfully', 'success');
+        this.getPlaces();
+      }
     }, (err => {
+      if (err.status === 409) {
+        this.toast.setMessage(JSON.parse(err._body).msg, 'danger');
+        this.isLoading = false;
+      }
       console.log(err);
-    }), () => this.isLoading = false);
+    }));
   }
 
   private resetModel() {
