@@ -5,7 +5,9 @@ import {Observable} from 'rxjs/Observable';
 @Injectable()
 export class CourseCrudService {
   private headers = new Headers({'Content-Type': 'application/json', 'charset': 'UTF-8'});
-  private options = new RequestOptions(this.headers);
+  private options = new RequestOptions({
+    headers: this.headers
+  });
 
   constructor(private http: Http) {
   }
@@ -18,7 +20,7 @@ export class CourseCrudService {
     if (course._id) {
       return this.http.put(`/api/update-course/${course._id}`, course, this.options);
     } else {
-      return this.http.post('/api/course', course, this.headers);
+      return this.http.post('/api/course', course, this.options);
     }
   }
 }

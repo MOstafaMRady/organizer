@@ -49,7 +49,6 @@ abstract class BaseCtrl {
 
   // Update by id
   update = (req, res) => {
-    console.log('============================ wrong route =============================');
     const id = req.params.id || res.params._id;
     console.log(id);
     if (!id) {
@@ -69,6 +68,7 @@ abstract class BaseCtrl {
 
   // Delete by id
   delete = (req, res) => {
+    console.log('by base');
     this.model.findOneAndRemove({_id: req.params.id}, (err) => {
       if (err) {
         return console.error(err);
