@@ -49,7 +49,6 @@ abstract class BaseCtrl {
 
   // Update by id
   update = (req, res) => {
-    console.log('============================ wrong route =============================');
     const id = req.params.id || res.params._id;
     console.log(id);
     if (!id) {
