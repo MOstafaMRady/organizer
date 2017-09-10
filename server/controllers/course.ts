@@ -1,8 +1,10 @@
 import Course from '../models/course';
+import Group from '../models/group';
 import BaseCtrl from './base';
 
 export default class CourseController extends BaseCtrl {
   model = Course;
+  group = Group;
 
   getAll = (req, res) => {
     this.model
@@ -33,5 +35,30 @@ export default class CourseController extends BaseCtrl {
           res.send(updatedObj);
         });
       });
+  }
+
+  checkAnddelete = (req, res) => {
+    console.log('by base');
+
+    this.group.find({
+      'course': {
+        $eq: req.params.id
+      }
+    }, (err, courses) => {
+      if (err) {
+        return console.error(err);
+      }
+
+      if (!courses || courses.length === 0) {
+        this.model.findOneAndRemove({_id: req.params.id}, (err2) => {
+          if (err2) {
+            return console.error(err2);
+          }
+          res.sendStatus(200);
+        });
+      } else {
+        res.status(409).json(courses);
+      }
+    });
   }
 }
