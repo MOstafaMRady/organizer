@@ -21,6 +21,7 @@
         <tr *ngFor="let c of courses">
           <td>
             <button class="btn btn-secondary" (click)="startEdit(c)"><i class="fa fa-edit fa-lg"></i></button>
+            <button class="btn btn-secondary" (click)="removeCourse(c)"><i class="fa fa-remove fa-lg"></i></button>
           </td>
           <td>
             <div class="title">{{c.title}}</div>

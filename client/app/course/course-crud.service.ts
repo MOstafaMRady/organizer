@@ -23,4 +23,8 @@ export class CourseCrudService {
       return this.http.post('/api/course', course, this.options);
     }
   }
+
+  removeCourse(c: any) {
+    return this.http.delete('/api/course/' + c._id);
+  }
 }

@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Place} from '../models/place/place.model';
 import {PlaceCrudService} from '../place/place-crud.service';
 import {CourseCrudService} from './course-crud.service';
-import {CustomValidators} from "ng2-validation";
+import {CustomValidators} from 'ng2-validation';
 
 @Component({
   selector: 'app-course',
@@ -102,5 +102,17 @@ export class CourseComponent implements OnInit {
   hideAndResetForm() {
     this.resetModel();
     this.showEditor = false;
+  }
+
+  removeCourse(c: any) {
+    this.courseCrud.removeCourse(c).subscribe((res) => {
+      console.log(res);
+    }, err => {
+      if (err && err.status === 409) {
+        const body = JSON.parse(err._body);
+
+        alert(`course is in use in group(s), ${body.map(x => x.name).join()}`);
+      }
+    });
   }
 }

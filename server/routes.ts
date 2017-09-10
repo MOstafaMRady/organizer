@@ -40,7 +40,7 @@ export default function setRoutes(app) {
   router.route('/course').post(courseController.insert);
   router.route('/course/:id').get(courseController.get);
   router.route('/update-course/:id').put(courseController.updateItem);
-  router.route('/course/:id').delete(courseController.delete);
+  router.route('/course/:id').delete(courseController.checkAnddelete);
 
   // Places
   router.route('/places').get(placeController.getAll);
