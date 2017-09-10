@@ -1,3 +1,7 @@
 .table th, .table td {
   vertical-align: middle;
 }
+
+label.form-control-label {
+  font-weight: bold;
+}
