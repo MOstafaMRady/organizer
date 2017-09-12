@@ -31,51 +31,35 @@
         </a>
       </li>
     </ul>
+    <ul class="nav navbar-nav ml-auto">
+      <li>
+        <a routerLink="/register" class="nav-item nav-link" routerLinkActive="active" *ngIf="!auth.loggedIn">
+          <b>Register</b>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/login" class="nav-item nav-link" routerLinkActive="active" *ngIf="!auth.loggedIn">
+          <b>Login</b>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/account" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn">
+          <i class="fa fa-user"></i> Account ({{auth.currentUser.username}})
+        </a>
+      </li>
+      <li>
+        <a routerLink="/admin" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn && auth.isAdmin">
+          <i class="fa fa-lock"></i> Admin
+        </a>
+      </li>
+      <li>
+        <a routerLink="/logout" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn">
+          <i class="fa fa-sign-out"></i> Logout
+        </a>
+      </li>
+    </ul>
   </div>
 </nav>
-
 <div class="container">
-
-
   <router-outlet></router-outlet>
-
 </div>
-
-
-<!--<div class="navbar navbar-default navbar-fixed-top">
-  <div class="container">
-    <div class="navbar-header">
-      <a href="../" class="navbar-brand">Organizer</a>
-      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-    </div>
-    <div class="navbar-collapse collapse" id="navbar-main">
-      <ul class="nav navbar-nav">
-        <li>
-          <a routerLink="/places" class="nav-item nav-link" routerLinkActive="active">
-            <i class="fa fa-location-arrow"></i> Places
-          </a>
-        </li>
-        <li>
-          <a routerLink="/courses" class="nav-item nav-link" routerLinkActive="active">
-            <i class="fa fa-graduation-cap"></i> Courses
-          </a>
-        </li>
-        <li>
-          <a routerLink="/attendees" class="nav-item nav-link" routerLinkActive="active">
-            <i class="fa fa-user-circle-o"></i> Attendees
-          </a>
-        </li>
-        <li>
-          <a routerLink="/groups" class="nav-item nav-link" routerLinkActive="active">
-            <i class="fa fa-users"></i> Groups
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>-->
-

@@ -5,3 +5,8 @@
 label.form-control-label {
   font-weight: bold;
 }
+
+.form-control-feedback {
+  background: wheat;
+  padding: 0 3px;
+}

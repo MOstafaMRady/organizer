@@ -50,7 +50,10 @@ export class PlaceComponent implements OnInit {
     this.isLoading = true;
     const place = this.form.value;
     const observable = place._id ? this.placeCrudSvc.edit(place) : this.placeCrudSvc.add(place);
-    observable.subscribe(() => this.getPlaces(), error => console.log(error), () => this.showEditor = false);
+    observable.subscribe(() => this.getPlaces(), error => console.log(error), () => {
+      this.showEditor = false;
+      this.isLoading = false;
+    });
   }
 
   startEdit(place: any) {
@@ -62,18 +65,20 @@ export class PlaceComponent implements OnInit {
 
   deletePlace(id: any) {
     this.isLoading = true;
-    this.placeCrudSvc.deletePlace(id).subscribe((res) => {
-      if (res.statusCode === 200) {
-        this.toast.setMessage('Place removed successfully', 'success');
-        this.getPlaces();
-      }
-    }, (err => {
-      if (err.status === 409) {
-        this.toast.setMessage(JSON.parse(err._body).msg, 'danger');
-        this.isLoading = false;
-      }
-      console.log(err);
-    }));
+    this.placeCrudSvc
+      .deletePlace(id)
+      .subscribe(res => {
+        if (res.status === 200) {
+          this.toast.setMessage('Place removed successfully', 'success');
+          this.getPlaces();
+        }
+      }, err => {
+        if (err.status === 409) {
+          this.toast.setMessage(JSON.parse(err._body).msg, 'danger');
+          this.isLoading = false;
+        }
+        console.log(err);
+      });
   }
 
   private resetModel() {
