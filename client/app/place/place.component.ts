@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {PlaceCrudService} from './place-crud.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {CustomValidators} from 'ng2-validation';
 import {ToastComponent} from '../shared/toast/toast.component';
 
 @Component({
@@ -12,25 +10,11 @@ export class PlaceComponent implements OnInit {
   formTitle: string;
   places: any[];
   isLoading: boolean;
-  form: FormGroup;
   showEditor = false;
-
+  selectedModel: any;
 
   constructor(private placeCrudSvc: PlaceCrudService,
-              public toast: ToastComponent,
-              private fb: FormBuilder) {
-    this.form = this.fb.group({
-      _id: [],
-      name: ['', Validators.required],
-      phone1: ['', [Validators.required, CustomValidators.number, CustomValidators.rangeLength([5, 11])]],
-      phone2: this.addPhoneControl(),
-      phone3: this.addPhoneControl(),
-      address: ['', Validators.required]
-    });
-  }
-
-  addPhoneControl() {
-    return this.fb.control('', [CustomValidators.number, CustomValidators.rangeLength([6, 11])]);
+              public toast: ToastComponent) {
   }
 
   ngOnInit() {
@@ -46,20 +30,22 @@ export class PlaceComponent implements OnInit {
         () => this.isLoading = false);
   }
 
-  save() {
+  save(place: any) {
     this.isLoading = true;
-    const place = this.form.value;
     const observable = place._id ? this.placeCrudSvc.edit(place) : this.placeCrudSvc.add(place);
-    observable.subscribe(() => this.getPlaces(), error => console.log(error), () => {
-      this.showEditor = false;
-      this.isLoading = false;
-    });
+    observable.subscribe(() => {
+        this.getPlaces();
+        this.toast.setMessage('Place saved successfully', 'success');
+      }, error => console.log(error),
+      () => {
+        this.showEditor = false;
+        this.isLoading = false;
+      });
   }
 
   startEdit(place: any) {
+    this.selectedModel = place;
     this.formTitle = 'Edit Place';
-    this.resetModel();
-    this.form.patchValue(place);
     this.showForm();
   }
 
@@ -81,22 +67,17 @@ export class PlaceComponent implements OnInit {
       });
   }
 
-  private resetModel() {
-    this.form.patchValue({_id: null, name: '', phone1: '', phone2: '', phone3: '', address: ''});
-  }
-
   showForm() {
     this.showEditor = true;
   }
 
   startAdd() {
+    this.selectedModel = null;
     this.formTitle = 'Add Place';
-    this.resetModel();
     this.showForm();
   }
 
   hideAndResetForm() {
-    this.resetModel();
     this.showEditor = false;
   }
 }

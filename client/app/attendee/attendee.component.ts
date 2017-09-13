@@ -30,8 +30,7 @@ export class AttendeeComponent implements OnInit {
       .subscribe(
         data => this.attendees = data,
         error => console.log(error),
-        () => this.isLoading = false
-      );
+        () => this.isLoading = false);
   }
 
   showForm() {
@@ -68,7 +67,10 @@ export class AttendeeComponent implements OnInit {
   deleteAttendee(_id: any) {
     this.groupCrud.checkCanDelete(_id).subscribe((count: number) => {
       if (count < 1) {
-        this.attendeeCrudSvc.deleteAttendee(_id).subscribe(() => this.getAttendees());
+        this.attendeeCrudSvc.deleteAttendee(_id).subscribe(() => {
+          this.toast.setMessage('Deleted successfully', 'success');
+          this.getAttendees();
+        });
       } else {
         this.toast.setMessage('Can\'t remove, is joining (' + count + ') group(s)!', 'danger');
       }

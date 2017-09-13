@@ -6,7 +6,8 @@ label.form-control-label {
   font-weight: bold;
 }
 
-.form-control-feedback {
+.form-group.has-error .form-control-feedback {
+  color: #d9534f;
   background: wheat;
   padding: 0 3px;
 }
