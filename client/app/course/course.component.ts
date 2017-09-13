@@ -4,6 +4,7 @@ import {Place} from '../models/place/place.model';
 import {PlaceCrudService} from '../place/place-crud.service';
 import {CourseCrudService} from './course-crud.service';
 import {CustomValidators} from 'ng2-validation';
+import {ToastComponent} from '../shared/toast/toast.component';
 
 @Component({
   selector: 'app-course',
@@ -16,9 +17,10 @@ export class CourseComponent implements OnInit {
   courses: any[];
   showEditor: boolean;
   @ViewChildren('titleElInput') titleElInput: QueryList<any>;
+  isLoading = false;
 
   constructor(private fb: FormBuilder, private placeCrudService: PlaceCrudService,
-              private courseCrud: CourseCrudService, private w: NgZone) {
+              private courseCrud: CourseCrudService, private w: NgZone, public toast: ToastComponent) {
   }
 
   ngOnInit() {
@@ -42,8 +44,12 @@ export class CourseComponent implements OnInit {
   }
 
   private getCourses() {
+    this.isLoading = true;
     this.courseCrud.getAll()
-      .subscribe(data => this.courses = data,
+      .subscribe(data => {
+          this.courses = data;
+          this.isLoading = false;
+        },
         err => console.log(err));
   }
 
@@ -52,6 +58,7 @@ export class CourseComponent implements OnInit {
     this.courseCrud.save(course)
       .subscribe(
         () => {
+          this.toast.setMessage('Saved successfully', 'success');
           this.hideAndResetForm();
           this.getCourses();
         },
@@ -106,12 +113,12 @@ export class CourseComponent implements OnInit {
 
   removeCourse(c: any) {
     this.courseCrud.removeCourse(c).subscribe((res) => {
-      console.log(res);
+      this.toast.setMessage('Removed successfully', 'danger');
+      this.getCourses();
     }, err => {
       if (err && err.status === 409) {
         const body = JSON.parse(err._body);
-
-        alert(`course is in use in group(s), ${body.map(x => x.name).join()}`);
+        this.toast.setMessage(`course is in use in group(s), ${body.map(x => x.name).join()}`, 'danger');
       }
     });
   }
