@@ -24,7 +24,7 @@
       <div class="row">
         <div class="col-sm-4">
           <div class="form-group"
-               [ngClass]="{'has-error':form.get('phone1')?.invalid && form.get('phone1').touched}">
+               [ngClass]="{'has-danger':form.get('phone1')?.invalid && form.get('phone1').touched}">
             <label for="phone1" class="form-control-label">Phone 1</label>
             <input class="form-control" id="phone1" formControlName="phone1"
                    [ngClass]="{'invalid':form.get('phone1')?.invalid}" formControlName="phone1">
@@ -44,7 +44,7 @@
             <label for="phone2" class="form-control-label">Phone 2</label>
             <input class="form-control" id="phone2" formControlName="phone2">
             <div class="form-control-feedback">
-              <div *ngIf="form.get('phone2').touched && form.get('phone2')?.errors?.rangeLength">At least 5 numbers and
+              <div *ngIf="form.get('phone2').touched && form.get('phone2')?.errors?.rangeLength">At least 6 numbers and
                 Maximum 11 numbers
               </div>
               <div *ngIf="form.get('phone2').touched && form.get('phone2')?.errors?.number">Must be number, no
@@ -58,7 +58,7 @@
             <label for="phone3" class="form-control-label">Phone 3</label>
             <input class="form-control" id="phone3" formControlName="phone3">
             <div class="form-control-feedback">
-              <div *ngIf="form.get('phone3').touched && form.get('phone3')?.errors?.rangeLength">At least 5 numbers and
+              <div *ngIf="form.get('phone3').touched && form.get('phone3')?.errors?.rangeLength">At least 6 numbers and
                 Maximum 11 numbers
               </div>
               <div *ngIf="form.get('phone3').touched && form.get('phone3')?.errors?.number">Must be number, no

@@ -49,7 +49,7 @@
         </div>
         <div class="col-sm-3">
           <div class="form-group"
-               [ngClass]="{'has-error':form.get('phone1').errors?.required && form.get('phone1').touched}">
+               [ngClass]="{'has-error':form.get('phone1')?.invalid && form.get('phone1').touched}">
             <label for="phone1" class="control-label"> Phone 1 <em
               *ngIf="form.get('phone1').errors?.required">*</em></label>
             <input class="form-control" id="phone1" formControlName="phone1">
