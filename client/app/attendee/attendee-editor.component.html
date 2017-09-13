@@ -7,9 +7,8 @@
       <div class="row">
         <div class="col-sm-4">
           <div class="form-group"
-               [ngClass]="{'has-error':form.get('firstName').errors?.required && form.get('firstName').touched}">
-            <label for="title" class="control-label"> First Name <em
-              *ngIf="form.get('firstName').errors?.required">*</em></label>
+               [ngClass]="{'has-danger':form.get('firstName')?.invalid && form.get('firstName').touched}">
+            <label for="title" class="form-control-label"> First Name</label>
             <input class="form-control" #titleElInput id="title" formControlName="firstName">
           </div>
         </div>
@@ -21,9 +20,8 @@
         </div>
         <div class="col-sm-4">
           <div class="form-group"
-               [ngClass]="{'has-error':form.get('lastName').errors?.required && form.get('lastName').touched}">
-            <label for="lastName" class="control-label"> Last Name <em
-              *ngIf="form.get('lastName').errors?.required">*</em></label>
+               [ngClass]="{'has-danger':form.get('lastName')?.invalid && form.get('lastName').touched}">
+            <label for="lastName" class="form-control-label">Last Name</label>
             <input class="form-control" id="lastName" formControlName="lastName">
           </div>
         </div>
@@ -31,9 +29,8 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group"
-               [ngClass]="{'has-error':form.get('gender').errors?.required && form.get('gender').touched}">
-            <label for="gender" class="control-label"> Gender <em
-              *ngIf="form.get('gender').errors?.required">*</em></label>
+               [ngClass]="{'has-danger':form.get('gender')?.invalid && form.get('gender').touched}">
+            <label for="gender" class="form-control-label"> Gender</label>
             <select class="form-control" formControlName="gender" id="gender">
               <option *ngFor="let g of genderData" [value]="g">{{g}}</option>
             </select>
@@ -41,24 +38,44 @@
         </div>
         <div class="col-sm-3">
           <div class="form-group"
-               [ngClass]="{'has-error':form.get('birthDate').errors?.required && form.get('birthDate').touched}">
-            <label for="birthDate">Birth Date</label>
+               [ngClass]="{'has-danger':form.get('birthDate')?.invalid && form.get('birthDate').touched}">
+            <label class="form-control-label" for="birthDate">Birth Date</label>
             <input formControlName="birthDate" class="form-control" id="birthDate"
                    [dpDayPicker]="config" theme="dp-material"/>
+            <div class="form-control-feedback">
+              <span *ngIf="form.get('birthDate')?.touched&&form.get('birthDate')?.errors?.invalidDate">
+                Invalid Date - (format: day/month/year)</span>
+            </div>
           </div>
         </div>
         <div class="col-sm-3">
           <div class="form-group"
-               [ngClass]="{'has-error':form.get('phone1')?.invalid && form.get('phone1').touched}">
-            <label for="phone1" class="control-label"> Phone 1 <em
-              *ngIf="form.get('phone1').errors?.required">*</em></label>
+               [ngClass]="{'has-danger':form.get('phone1')?.invalid && form.get('phone1').touched}">
+            <label for="phone1" class="form-control-label"> Phone 1</label>
             <input class="form-control" id="phone1" formControlName="phone1">
+            <div class="form-control-feedback">
+              <div *ngIf="form.get('phone1').touched && form.get('phone1')?.errors?.rangeLength">At least 5 numbers and
+                Maximum 11 numbers
+              </div>
+              <div *ngIf="form.get('phone1').touched && form.get('phone1')?.errors?.required">Phone 1 is required</div>
+              <div *ngIf="form.get('phone1').touched && form.get('phone1')?.errors?.number">Must be number, no
+                letters allowed
+              </div>
+            </div>
           </div>
         </div>
         <div class="col-sm-3">
-          <div class="form-group">
-            <label for="phone2" class="control-label"> Phone 2</label>
+          <div class="form-group" [ngClass]="{'has-danger':form.get('phone2')?.invalid && form.get('phone2').touched}">
+            <label for="phone2" class="form-control-label"> Phone 2</label>
             <input class="form-control" id="phone2" formControlName="phone2">
+            <div class="form-control-feedback">
+              <div *ngIf="form.get('phone2').touched && form.get('phone2')?.errors?.rangeLength">At least 6 numbers and
+                Maximum 11 numbers
+              </div>
+              <div *ngIf="form.get('phone2').touched && form.get('phone2')?.errors?.number">Must be number, no
+                letters allowed
+              </div>
+            </div>
           </div>
         </div>
       </div>

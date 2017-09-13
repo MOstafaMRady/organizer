@@ -3,6 +3,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {GenderData} from '../shared/gender-data.service';
 import {AttendeeCrudService} from './attendee-crud.service';
 import * as moment from 'moment';
+import {CustomValidators} from 'ng2-validation';
+import {DateFormatValidator} from '../shared/validators/date-format.validator';
 
 @Component({
   selector: 'app-attendee-editor',
@@ -42,10 +44,10 @@ export class AttendeeEditorComponent {
       middleName: [''],
       lastName: ['', Validators.required],
       gender: ['', Validators.required],
-      birthDate: ['', Validators.required],
-      phone1: ['', Validators.required],
-      phone2: [],
-      address: []
+      birthDate: ['', [Validators.required, DateFormatValidator()]],
+      phone1: ['', [Validators.required, CustomValidators.number, CustomValidators.rangeLength([6, 11])]],
+      phone2: ['', [ CustomValidators.number, CustomValidators.rangeLength([6, 11])]],
+      address:  [''],
     });
     this.title = 'Add Attendee';
   }
