@@ -69,7 +69,10 @@ export class CourseComponent implements OnInit {
     this.formTitle = 'Edit course';
     this.resetModel();
     this.form.patchValue(course);
-    this.form.get('place').patchValue(course.place._id);
+    if (course && course.place && course.place._id) {
+      this.form.get('place').patchValue(course.place._id);
+    }
+
     this.showForm();
     this.setFocusedEl();
   }
