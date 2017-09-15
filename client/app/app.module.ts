@@ -32,6 +32,7 @@ import {GroupCrudService} from './group/group-crud.service';
 import {AttendeesJoinPipe} from './shared/pipes/attendees-join.pipe';
 import {AttendeeFullNameService} from './shared/pipes/attendee-full-name.service';
 import {PlaceEditorComponent} from './place/place-editor.component';
+import {UserDataPipe} from './shared/pipes/user-data.pipe';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import {PlaceEditorComponent} from './place/place-editor.component';
     AttendeesJoinPipe,
     GroupComponent,
     GroupEditorComponent,
-    PlaceEditorComponent
+    PlaceEditorComponent,
+    UserDataPipe
   ],
   imports: [
     RoutingModule,

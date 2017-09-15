@@ -19,6 +19,7 @@
           <th>gender</th>
           <th>birthDate</th>
           <th>phone1</th>
+          <th>Account</th>
         </tr>
         </thead>
         <tbody>
@@ -32,6 +33,7 @@
           <td>{{c.gender}}</td>
           <td>{{c.birthDate | date:'d/M/y'}}</td>
           <td>{{c.phone1}}</td>
+          <td>{{c.user?(c.user | userData) : ''}}</td>
         </tr>
         </tbody>
       </table>

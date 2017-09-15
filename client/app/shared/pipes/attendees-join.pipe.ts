@@ -18,3 +18,4 @@ export class AttendeesJoinPipe implements PipeTransform {
   }
 
 }
+
