@@ -1,8 +1,9 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {GenderData} from '../shared/gender-data.service';
 import {AttendeeCrudService} from './attendee-crud.service';
 import * as moment from 'moment';
+import * as _ from 'lodash';
 import {CustomValidators} from 'ng2-validation';
 import {DateFormatValidator} from '../shared/validators/date-format.validator';
 
@@ -10,16 +11,18 @@ import {DateFormatValidator} from '../shared/validators/date-format.validator';
   selector: 'app-attendee-editor',
   templateUrl: './attendee-editor.component.html'
 })
-export class AttendeeEditorComponent {
+export class AttendeeEditorComponent implements OnInit {
   config: {
     format: string;
   };
+
   genderData: string[];
   form: FormGroup;
   title = '';
   @Output() saved = new EventEmitter();
   @Output() cancelled = new EventEmitter();
   @Output() itemSaved = new EventEmitter();
+  users: any[] = [];
 
   @Input()
   set model(value: any) {
@@ -31,6 +34,9 @@ export class AttendeeEditorComponent {
     this.form.patchValue(value);
     const birthDateFormatted = moment(value.birthDate).format('DD/MM/YYYY');
     this.form.get('birthDate').patchValue(birthDateFormatted);
+    if (value.user && value.user._id) {
+      this.form.get('user').patchValue(value.user._id);
+    }
   }
 
   constructor(private fb: FormBuilder,
@@ -46,10 +52,21 @@ export class AttendeeEditorComponent {
       gender: ['', Validators.required],
       birthDate: ['', [Validators.required, DateFormatValidator()]],
       phone1: ['', [Validators.required, CustomValidators.number, CustomValidators.rangeLength([6, 11])]],
-      phone2: ['', [ CustomValidators.number, CustomValidators.rangeLength([6, 11])]],
-      address:  [''],
+      phone2: ['', [CustomValidators.number, CustomValidators.rangeLength([6, 11])]],
+      address: [''],
+      user: ['']
     });
     this.title = 'Add Attendee';
+  }
+
+  ngOnInit(): void {
+    this.attendeeCrudSvc.getUsers()
+      .subscribe(users => {
+        this.attendeeCrudSvc.getAll().subscribe((attendees: any) => {
+          const attnUsers = _.filter(attendees, x => x.user).map(x => x.user);
+          this.users = _.filter(users, u => (_.findIndex(attnUsers, a => a._id === u._id)) < 0);
+        });
+      });
   }
 
   save() {

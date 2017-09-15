@@ -8,7 +8,11 @@ const attendeeSchema = new mongoose.Schema({
   gender: String,
   middleName: String,
   phone1: String,
-  phone2: String
+  phone2: String,
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }
 });
 
 const Attendee = mongoose.model('Attendee', attendeeSchema);

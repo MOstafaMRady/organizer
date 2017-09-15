@@ -10,8 +10,8 @@ export class AttendeeCrudService {
   constructor(private http: Http) {
   }
 
-  getAll(): Observable<any[]> {
-    return this.http.get('/api/attendees').map(res => res.json());
+  getAll() {
+    return this.http.get('/api/attendees').map(x => x.json());
   }
 
   save(attendee: any): Observable<any> {
@@ -24,5 +24,9 @@ export class AttendeeCrudService {
 
   deleteAttendee(_id: any) {
     return this.http.delete(`/api/attendee/${_id}`);
+  }
+
+  getUsers() {
+    return this.http.get('/api/users').map(x => x.json());
   }
 }
