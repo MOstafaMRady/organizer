@@ -23,6 +23,7 @@ export class AttendeeEditorComponent implements OnInit {
   @Output() cancelled = new EventEmitter();
   @Output() itemSaved = new EventEmitter();
   users: any[] = [];
+  selectedUser: any;
 
   @Input()
   set model(value: any) {
@@ -35,6 +36,7 @@ export class AttendeeEditorComponent implements OnInit {
     const birthDateFormatted = moment(value.birthDate).format('DD/MM/YYYY');
     this.form.get('birthDate').patchValue(birthDateFormatted);
     if (value.user && value.user._id) {
+      this.selectedUser = value.user;
       this.form.get('user').patchValue(value.user._id);
     }
   }
@@ -65,6 +67,9 @@ export class AttendeeEditorComponent implements OnInit {
         this.attendeeCrudSvc.getAll().subscribe((attendees: any) => {
           const attnUsers = _.filter(attendees, x => x.user).map(x => x.user);
           this.users = _.filter(users, u => (_.findIndex(attnUsers, a => a._id === u._id)) < 0);
+          if (this.selectedUser) {
+            this.users.push(this.selectedUser);
+          }
         });
       });
   }
