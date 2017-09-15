@@ -90,6 +90,7 @@
         <select class="form-control" formControlName="user" id="user">
           <option *ngFor="let u of users" [value]="u._id">{{u|userData}}</option>
         </select>
+        <button *ngIf="form.get('user')?.value" (click)="unbindUser()" type="button" class="btn btn-secondary">Unbind</button>
       </div>
       <hr>
       <button class="btn btn-primary" [disabled]="form.invalid">Save</button>

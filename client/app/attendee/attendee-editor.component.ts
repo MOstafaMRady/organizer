@@ -84,4 +84,8 @@ export class AttendeeEditorComponent implements OnInit {
   cancel() {
     this.cancelled.emit();
   }
+
+  unbindUser() {
+    this.form.get('user').patchValue(null);
+  }
 }
