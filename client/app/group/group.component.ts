@@ -1,16 +1,21 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, TemplateRef} from '@angular/core';
 import {GroupCrudService} from './group-crud.service';
+import {Router} from '@angular/router';
+import {BsModalService} from 'ngx-bootstrap/modal';
+import {BsModalRef} from 'ngx-bootstrap/modal/modal-options.class';
 
 @Component({
   selector: 'app-group',
   templateUrl: './group.component.html'
 })
 export class GroupComponent implements OnInit {
+  appointmentsGroup: any;
   selectedModel: any;
   groups: any[] = [];
   showEditor = false;
+  public modalRef: BsModalRef;
 
-  constructor(private crud: GroupCrudService) {
+  constructor(private crud: GroupCrudService, private router: Router, private modalService: BsModalService) {
   }
 
   ngOnInit() {
@@ -42,5 +47,10 @@ export class GroupComponent implements OnInit {
   onSave() {
     this.getGroups();
     this.showEditor = false;
+  }
+
+  manageAppointments(g: any, template: TemplateRef<any>) {
+    this.appointmentsGroup = g;
+    this.modalRef = this.modalService.show(template);
   }
 }

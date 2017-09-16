@@ -15,6 +15,7 @@ import {PlaceComponent} from './place/place.component';
 import {CourseComponent} from './course/course.component';
 import {AttendeeComponent} from './attendee/attendee.component';
 import {GroupComponent} from './group/group.component';
+import {ManageAppointmentComponent} from './group/manage-appointment.component';
 
 const routes: Routes = [
   {path: '', component: AboutComponent},
@@ -27,6 +28,7 @@ const routes: Routes = [
   {path: 'places', component: PlaceComponent},
   {path: 'courses', component: CourseComponent},
   {path: 'groups', component: GroupComponent},
+  {path: 'group/appointments', component: ManageAppointmentComponent},
   {path: 'attendees', component: AttendeeComponent},
   {path: 'notfound', component: NotFoundComponent},
   {path: '**', redirectTo: '/notfound'},

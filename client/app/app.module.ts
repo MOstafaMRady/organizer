@@ -33,7 +33,9 @@ import {AttendeesJoinPipe} from './shared/pipes/attendees-join.pipe';
 import {AttendeeFullNameService} from './shared/pipes/attendee-full-name.service';
 import {PlaceEditorComponent} from './place/place-editor.component';
 import {UserDataPipe} from './shared/pipes/user-data.pipe';
-
+import {ManageAppointmentComponent} from './group/manage-appointment.component';
+import {ModalModule} from 'ngx-bootstrap/modal';
+import {TimepickerModule} from 'ngx-bootstrap/timepicker';
 
 @NgModule({
   declarations: [
@@ -55,14 +57,17 @@ import {UserDataPipe} from './shared/pipes/user-data.pipe';
     GroupComponent,
     GroupEditorComponent,
     PlaceEditorComponent,
-    UserDataPipe
+    UserDataPipe,
+    ManageAppointmentComponent
   ],
   imports: [
     RoutingModule,
     SharedModule,
     ReactiveFormsModule,
     DpDatePickerModule,
-    MomentModule
+    MomentModule,
+    ModalModule.forRoot(),
+    TimepickerModule.forRoot()
   ],
   providers: [
     AuthService,
@@ -74,7 +79,8 @@ import {UserDataPipe} from './shared/pipes/user-data.pipe';
     CourseCrudService,
     AttendeeCrudService,
     GroupCrudService,
-    AttendeeFullNameService
+    AttendeeFullNameService,
+
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
