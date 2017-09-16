@@ -2,26 +2,37 @@
   <div class="card-block">
     <div class="row">
       <div class="col-sm-12">
-        <form [formGroup]="form">
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label class="form-control-label" for="day">Day</label>
-                <select id="day" class="form-control">
-                  <option *ngFor="let d of days" [value]="d">{{d}}</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label class="form-control-label" for="time">Time</label>
+        <form [formGroup]="form" *ngIf="days && days.length > 0">
+          <div class="form-group">
+            <label class="form-control-label" for="day">Day</label>
+            <select id="day" class="form-control" formControlName="day">
+              <option *ngFor="let d of days" [value]="d">{{d}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-7">
                 <timepicker formControlName="time"></timepicker>
-               <!-- <input formControlName="time" class="form-control" id="time"
-                       [dpDayPicker]="config" theme="dp-material" mode="time"/>-->
+              </div>
+              <div class="col-sm-5">
+                <button [disabled]="form.invalid" type="button" class="btn btn-outline-success"
+                        (click)="addAppointment()"><i class="fa fa-plus"></i>
+                </button>
               </div>
             </div>
           </div>
         </form>
+        <ul class="list-group">
+          <li class="list-group-item list-group-item-action" *ngFor="let a of appointments">
+            <button class="btn btn-danger btn-sm" type="button" (click)="removeAppointment(a)"><i
+              class="fa fa-remove"></i>
+            </button>
+            <span>&nbsp;<strong>{{a.day}}</strong> - {{a.time | amLocal | amDateFormat: 'HH:mm'}}</span>
+          </li>
+        </ul>
+        <button *ngIf="appointments && appointments.length>0" class="btn btn-primary" (click)="saveAppointments()">
+          <i class="fa fa-check"></i> Save
+        </button>
       </div>
     </div>
   </div>
