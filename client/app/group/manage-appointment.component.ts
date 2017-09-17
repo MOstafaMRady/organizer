@@ -48,16 +48,14 @@ export class ManageAppointmentComponent implements OnInit {
   }
 
   saveAppointments() {
-    this.actionTaken.emit('saved');
-    this.hideModal();
-    /*if (!this.appointments || this.appointments.length < 1) {
+    if (!this.appointments || this.appointments.length < 1) {
       alert('Please add one or more appointments.');
       return;
     }
     this.crudService.save(this.group._id, this.appointments).subscribe(data => {
-      console.log(data);
       this.actionTaken.emit('saved');
-    });*/
+      this.hideModal();
+    });
   }
 
 

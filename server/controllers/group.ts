@@ -18,12 +18,16 @@ export default class GroupController extends BaseCtrl {
     const id = req.params.id;
     this.model
       .count({
-        attendees:{$in: [id]}
+        attendees: {$in: [id]}
       }, (err, docs) => {
         if (err) {
           return console.error(err);
         }
         res.json(docs);
       });
+  }
+
+  postAppointments = (req, res) => {
+
   }
 }
