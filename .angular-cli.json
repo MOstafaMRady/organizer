@@ -21,6 +21,7 @@
       "styles": [
         "../client/x-css/superhero-bootstrap.css",
         "../node_modules/font-awesome/css/font-awesome.css",
+        "../client/glyphicon-override.scss",
         "../client/x-css/modify.css"
       ],
       "scripts": [

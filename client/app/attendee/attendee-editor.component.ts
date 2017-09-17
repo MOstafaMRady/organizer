@@ -68,6 +68,7 @@ export class AttendeeEditorComponent implements OnInit {
           const attnUsers = _.filter(attendees, x => x.user).map(x => x.user);
           this.users = _.filter(users, u => (_.findIndex(attnUsers, a => a._id === u._id)) < 0);
           if (this.selectedUser) {
+            console.log(this.selectedUser);
             this.users.push(this.selectedUser);
           }
         });
