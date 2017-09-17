@@ -23,7 +23,7 @@
             <tbody>
             <tr *ngFor="let g of groups">
               <td>
-                <button title="Manage appointments" class="btn btn-secondary" (click)="manageAppointments(g,template)">
+                <button title="Manage appointments" class="btn btn-secondary" (click)="manageAppointments(g)">
                   <i
                     class="fa fa-calendar"></i>
                 </button>
@@ -46,19 +46,8 @@
     </div>
   </div>
 </div>
-<div *ngIf="showEditor">
-  <app-group-editor (cancelledListener)="onCancel()" (itemSaved)="onSave()"
-                    [selectedModel]="selectedModel"></app-group-editor>
-</div>
 
-<ng-template #template>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">{{appointmentsGroup?.name}} Appointments</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <app-group-appointments [group]="appointmentsGroup"></app-group-appointments>
-  </div>
-</ng-template>
+<app-group-editor *ngIf="showEditor" (cancelledListener)="onCancel()" (itemSaved)="onSave()"
+                  [selectedModel]="selectedModel"></app-group-editor>
+
+<app-group-appointments *ngIf="showAppointments" [group]="appointmentsGroup" (actionTaken)="hideAppointments()"></app-group-appointments>

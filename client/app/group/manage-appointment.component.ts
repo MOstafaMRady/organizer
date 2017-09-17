@@ -1,5 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AppointmentCrudService} from './appointment-crud.service';
+import {ModalDirective} from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-group-appointments',
@@ -7,12 +9,17 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 })
 export class ManageAppointmentComponent implements OnInit {
   @Input() group: any;
+  @Output() actionTaken = new EventEmitter();
+
   form: FormGroup;
   config: { format: string };
   days = ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   appointments: any[] = [];
 
-  constructor(private fb: FormBuilder) {
+  @ViewChild('autoShownModal') public autoShownModal: ModalDirective;
+  public isModalShown = false;
+
+  constructor(private fb: FormBuilder, private crudService: AppointmentCrudService) {
     this.config = {format: 'HH:SS A'};
     this.form = this.fb.group({
       day: [this.days[0], Validators.required],
@@ -21,6 +28,7 @@ export class ManageAppointmentComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.showModal();
   }
 
   addAppointment() {
@@ -40,13 +48,32 @@ export class ManageAppointmentComponent implements OnInit {
   }
 
   saveAppointments() {
-    console.log(this.appointments);
+    this.actionTaken.emit('saved');
+    this.hideModal();
+    /*if (!this.appointments || this.appointments.length < 1) {
+      alert('Please add one or more appointments.');
+      return;
+    }
+    this.crudService.save(this.group._id, this.appointments).subscribe(data => {
+      console.log(data);
+      this.actionTaken.emit('saved');
+    });*/
+  }
+
+
+  /* Modal stuff*/
+
+  public showModal(): void {
+    this.isModalShown = true;
+  }
+
+  public hideModal(): void {
+    this.actionTaken.emit('cancelled');
+    this.autoShownModal.hide();
+  }
+
+  public onHidden(): void {
+    this.actionTaken.emit('cancelled');
+    this.isModalShown = false;
   }
 }
-
-
-
-
-
-
-

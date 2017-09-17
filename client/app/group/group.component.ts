@@ -1,8 +1,6 @@
-import {Component, OnInit, TemplateRef} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {GroupCrudService} from './group-crud.service';
-import {Router} from '@angular/router';
-import {BsModalService} from 'ngx-bootstrap/modal';
-import {BsModalRef} from 'ngx-bootstrap/modal/modal-options.class';
+import {ToastComponent} from '../shared/toast/toast.component';
 
 @Component({
   selector: 'app-group',
@@ -13,9 +11,9 @@ export class GroupComponent implements OnInit {
   selectedModel: any;
   groups: any[] = [];
   showEditor = false;
-  public modalRef: BsModalRef;
+  showAppointments = false;
 
-  constructor(private crud: GroupCrudService, private router: Router, private modalService: BsModalService) {
+  constructor(private crud: GroupCrudService, public toast: ToastComponent) {
   }
 
   ngOnInit() {
@@ -49,8 +47,17 @@ export class GroupComponent implements OnInit {
     this.showEditor = false;
   }
 
-  manageAppointments(g: any, template: TemplateRef<any>) {
+  manageAppointments(g: any) {
+    this.showAppointments = true;
     this.appointmentsGroup = g;
-    this.modalRef = this.modalService.show(template);
+  }
+
+  /*appointmentsSaved(action: any) {
+    if (action === 'saved') {
+      this.toast.setMessage('Appointments saved successfully', 'success');
+    }
+  }*/
+  hideAppointments() {
+    this.showAppointments = false;
   }
 }

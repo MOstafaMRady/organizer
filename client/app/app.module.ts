@@ -36,6 +36,7 @@ import {UserDataPipe} from './shared/pipes/user-data.pipe';
 import {ManageAppointmentComponent} from './group/manage-appointment.component';
 import {ModalModule} from 'ngx-bootstrap/modal';
 import {TimepickerModule} from 'ngx-bootstrap/timepicker';
+import {AppointmentCrudService} from './group/appointment-crud.service';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,7 @@ import {TimepickerModule} from 'ngx-bootstrap/timepicker';
     AttendeeCrudService,
     GroupCrudService,
     AttendeeFullNameService,
-
+    AppointmentCrudService
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
