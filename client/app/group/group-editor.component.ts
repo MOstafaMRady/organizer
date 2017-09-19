@@ -10,16 +10,21 @@ import {GroupCrudService} from './group-crud.service';
   templateUrl: './group-editor.component.html'
 })
 export class GroupEditorComponent implements OnInit {
-  isLoading: boolean;
+  @Output() cancelledListener = new EventEmitter();
+  @Output() itemSaved = new EventEmitter();
   form: FormGroup;
+
+  @Input() selectedModel: any;
+
+  selectedAttendees: any[] = [];
+  selectedAppointments: any[] = [];
+  title = '';
+
+  isLoading: boolean;
+
   attendees: any[] = [];
   places: any[] = [];
   courses: any[] = [];
-  selectedAttendees: any[] = [];
-  @Output() cancelledListener = new EventEmitter();
-  @Output() itemSaved = new EventEmitter();
-  @Input() selectedModel: any;
-  title = '';
 
   constructor(private fb: FormBuilder,
               private crud: GroupCrudService,
@@ -82,7 +87,11 @@ export class GroupEditorComponent implements OnInit {
   save() {
     const group = this.form.value;
     group.attendees = this.selectedAttendees.map((m: any) => m._id);
-    this.crud.save(group).subscribe(() => this.itemSaved.emit());
+    const data = {
+      group: group,
+      appointments: this.selectedAppointments
+    };
+    this.crud.save(data).subscribe(() => this.itemSaved.emit());
   }
 
   addToSelected() {
@@ -108,5 +117,9 @@ export class GroupEditorComponent implements OnInit {
   removeAttendee(a: any) {
     const idx = this.selectedAttendees.indexOf(a);
     this.selectedAttendees.splice(idx, 1);
+  }
+
+  handleAppointments(data: any) {
+    this.selectedAppointments = data;
   }
 }
