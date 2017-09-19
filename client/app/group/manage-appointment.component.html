@@ -1,54 +1,33 @@
-<div [config]="{ show: true}" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
-     class="modal fade"
-     tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title pull-left">{{group.name}} - Appointments</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
-          <span aria-hidden="true">&times;</span>
-        </button>
+<form [formGroup]="form">
+  <div class="row">
+    <div class="col-sm-6" *ngIf="!(days && days.length > 0)">
+      <div class="alert alert-info"><strong>All week days are added.</strong></div>
+    </div>
+    <div class="col-sm-6" *ngIf="days && days.length > 0">
+      <div class="form-group">
+        <label class="form-label">Time</label>
+        <timepicker formControlName="time"></timepicker>
       </div>
-      <div class="modal-body">
-        <form [formGroup]="form">
-          <div class="row">
-            <div class="col-sm-6" *ngIf="!(days && days.length > 0)">
-              <div class="alert alert-info"><strong>All week days are added.</strong></div>
-            </div>
-            <div class="col-sm-6" *ngIf="days && days.length > 0">
-              <div class="form-group">
-                <timepicker formControlName="time"></timepicker>
-              </div>
-              <div class="form-group">
-                <label class="form-control-label" for="day">Day</label>
-                <select id="day" class="form-control" formControlName="day">
-                  <option *ngFor="let d of days" [value]="d">{{d}}</option>
-                </select>
-              </div>
-              <button [disabled]="form.invalid" type="button" class="btn btn-outline-success"
-                      (click)="addAppointment()"><i class="fa fa-plus"></i>
-              </button>
-            </div>
-            <div class="col-sm-6">
-              <ul class="list-group">
-                <li class="list-group-item list-group-item-action" *ngFor="let a of appointments">
-                  <button class="btn btn-danger btn-sm" type="button" (click)="removeAppointment(a)"><i
-                    class="fa fa-remove"></i>
-                  </button>
-                  <span>&nbsp;<strong>{{a.day}}</strong> - {{a.time | amLocal | amDateFormat: 'HH:mm'}}</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </form>
+      <div class="form-group">
+        <label class="form-control-label" for="day">Day</label>
+        <select id="day" class="form-control" formControlName="day">
+          <option *ngFor="let d of days" [value]="d">{{d}}</option>
+        </select>
       </div>
-      <div class="modal-footer">
-        <button *ngIf="appointments && appointments.length>0" class="btn btn-primary"
-                (click)="saveAppointments()">
-          <i class="fa fa-check"></i> Save
-        </button>
-        <button type="button" class="btn btn-secondary" (click)="hideModal()"><i class="fa fa-close"></i> Close</button>
-      </div>
+      <button [disabled]="form.invalid" type="button" class="btn btn-primary" (click)="addAppointment()"><i
+        class="fa fa-plus"></i> Add
+      </button>
+    </div>
+    <div class="col-sm-6">
+      <h4>Appointments <span class="badge badge-pill badge-primary">{{appointments.length}}</span></h4>
+      <ul class="list-group">
+        <li class="list-group-item list-group-item-action" *ngFor="let a of appointments">
+          <button class="btn btn-danger btn-sm" type="button" (click)="removeAppointment(a)"><i
+            class="fa fa-remove"></i>
+          </button>
+          <span>&nbsp;<strong>{{a.day}}</strong> - {{a.time}}</span>
+        </li>
+      </ul>
     </div>
   </div>
-</div>
+</form>

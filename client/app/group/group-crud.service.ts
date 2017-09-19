@@ -14,12 +14,12 @@ export class GroupCrudService {
     return this.http.get('/api/groups').map(res => res.json());
   }
 
-  save(group: any) {
-    if (group._id && group._id.length > 5) {
-      return this.http.put(`/api/group/${group._id}`, group, this.options);
+  save(data: any) {
+    if (data.group._id && data.group._id.length > 5) {
+      return this.http.put(`/api/group/${data.group._id}`, data, this.options);
     } else {
-      delete group._id;
-      return this.http.post('/api/group', group, this.options);
+      delete data.group._id;
+      return this.http.post('/api/group', data, this.options);
     }
   }
 

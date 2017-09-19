@@ -10,6 +10,6 @@ export class AppointmentCrudService {
   }
 
   save(groupId: any, appointments: any[]) {
-    return this.http.post('/api/group/' + groupId + '/appointment', appointments, this.options);
+    return this.http.post('/api/group/' + groupId + '/appointments', {appointments: appointments}, this.options);
   }
 }

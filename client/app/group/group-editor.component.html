@@ -4,73 +4,77 @@
   </div>
   <div class="card-block">
     <div class="row">
-      <div class="col-sm-8">
-        <div class="well">
-          <form [formGroup]="form" (ngSubmit)="save()">
-            <div class="form-group" [ngClass]="{'has-danger': form.get('name').invalid && form.get('name')?.touched}">
-              <label
-                for="name"
-                class="form-control-label">Name</label>
-              <input
-                class="form-control"
-                id="name"
-                formControlName="name"
-                [ngClass]="{'form-control-danger':form.get('name')?.errors?.required}">
-            </div>
-            <div class="form-group" [ngClass]="{'has-danger':form.get('place')?.invalid && form.get('place')?.touched}">
-              <label for="place" class="form-control-label">Place</label>
-              <select id="place" class="form-control" formControlName="place">
-                <option *ngFor="let p of places" [value]="p._id">{{p.name}}</option>
-              </select>
-            </div>
-            <div class="form-group"
-                 [ngClass]="{'has-danger':form.get('course')?.invalid && form.get('course')?.touched}">
-              <label for="course" class="form-control-label">Course</label>
-              <select id="course" class="form-control" formControlName="course">
-                <option *ngFor="let c of filterCoursesByPlace(form.value?.place||null)" [value]="c?._id">{{c.title}}
-                </option>
-              </select>
-            </div>
-            <div class="row">
-              <div class="col-sm-6">
-                <div class="form-group"
-                     [ngClass]="{'has-danger':(!selectedAttendees || selectedAttendees.length<1) && form.get('selectedAttendee')?.touched}">
-                  <label for="attendee" class="form-control-label"> Attendees</label>
-                  <select id="attendee" class="form-control" formControlName="selectedAttendee">
-                    <option *ngFor="let a of attendees" [value]="a._id">{{a | fullName}}</option>
-                  </select>
-                  <button type="button" class="btn btn-primary" (click)="addToSelected()"><i
-                    class="fa fa-plus-circle"></i> Add
-                  </button>
-                </div>
+      <div class="col-sm-6">
+        <div class="row">
+          <div class="col-sm-6">
+            <h3>Group data</h3>
+            <form [formGroup]="form">
+              <div class="form-group"
+                   [ngClass]="{'has-danger': form.get('name').invalid && form.get('name')?.touched}">
+                <label
+                  for="name"
+                  class="form-control-label">Name</label>
+                <input
+                  class="form-control"
+                  id="name"
+                  formControlName="name"
+                  [ngClass]="{'form-control-danger':form.get('name')?.errors?.required}">
               </div>
+              <div class="form-group"
+                   [ngClass]="{'has-danger':form.get('place')?.invalid && form.get('place')?.touched}">
+                <label for="place" class="form-control-label">Place</label>
+                <select id="place" class="form-control" formControlName="place">
+                  <option *ngFor="let p of places" [value]="p._id">{{p.name}}</option>
+                </select>
+              </div>
+              <div class="form-group"
+                   [ngClass]="{'has-danger':form.get('course')?.invalid && form.get('course')?.touched}">
+                <label for="course" class="form-control-label">Course</label>
+                <select id="course" class="form-control" formControlName="course">
+                  <option *ngFor="let c of filterCoursesByPlace(form.value?.place||null)" [value]="c?._id">{{c.title}}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group"
+                   [ngClass]="{'has-danger':(!selectedAttendees || selectedAttendees.length<1) && form.get('selectedAttendee')?.touched}">
+                <label for="attendee" class="form-control-label"> Attendees</label>
+                <select id="attendee" class="form-control" formControlName="selectedAttendee">
+                  <option *ngFor="let a of attendees" [value]="a._id">{{a | fullName}}</option>
+                </select>
+              </div>
+              <button type="button" class="btn btn-primary" (click)="addToSelected()"><i
+                class="fa fa-plus"></i> Add
+              </button>
+            </form>
+          </div>
+          <div class="col-sm-6">
+            <div>
+              <h4> Attendees
+                <span class="badge badge-pill badge-primary">{{selectedAttendees.length}}</span>
+              </h4>
+              <ul class="list-group">
+                <li class="list-group-item list-group-item-action" *ngFor="let a of selectedAttendees">
+                  <button type="button" class="btn btn-danger btn-sm" (click)="removeAttendee(a)">
+                    <i class="fa fa-remove"></i></button>&nbsp;
+                  <span class="tag tag-default tag-pill float-xs-right">{{a | fullName}}</span>
+                </li>
+              </ul>
             </div>
-            <hr>
-            <button [disabled]="form.invalid || !selectedAttendees || selectedAttendees.length < 1 "
-                    class="btn btn-primary">Save
-            </button>
-            <button type="button" class="btn btn-danger" (click)="onCancel()">Cancel</button>
-          </form>
+          </div>
         </div>
       </div>
-      <div class="col-sm-4">
-        <div *ngIf="selectedAttendees.length > 0">
-          <label>
-            Attendees <span class="badge badge-primary">{{selectedAttendees.length}}</span>
-          </label>
-          <table class="table table-bordered tab-content table-responsive">
-            <tbody>
-            <tr *ngFor="let a of selectedAttendees;index as idx">
-              <td>{{idx+1}}</td>
-              <td>{{a | fullName}}</td>
-              <td>
-                <button type="button" class="btn btn-danger btn-xs" (click)="removeAttendee(a)">
-                  <i class="fa fa-remove"></i></button>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
+      <div class="col-sm-6">
+        <app-group-appointments (appointmentsChanged)="handleAppointments($event)"></app-group-appointments>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-sm-12">
+        <button (click)="save()"
+                [disabled]="form.invalid || !selectedAttendees || selectedAttendees.length < 1 "
+                class="btn btn-primary"><i class="fa fa-check"></i> Save
+        </button>
+        <button type="button" class="btn btn-danger" (click)="onCancel()"><i class="fa fa-remove"></i> Cancel</button>
       </div>
     </div>
   </div>

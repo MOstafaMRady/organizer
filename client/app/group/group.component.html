@@ -23,13 +23,9 @@
             <tbody>
             <tr *ngFor="let g of groups">
               <td>
-                <button title="Manage appointments" class="btn btn-secondary" (click)="manageAppointments(g)">
-                  <i
-                    class="fa fa-calendar"></i>
+                <button class="btn btn-secondary btn-sm" (click)="startEdit(g)"><i class="fa fa-edit"></i>
                 </button>
-                <button class="btn btn-secondary" (click)="startEdit(g)"><i class="fa fa-edit"></i>
-                </button>
-                <button class="btn btn-secondary" (click)="deleteGroup(g)"><i class="fa fa-remove"></i>
+                <button class="btn btn-secondary btn-sm" (click)="deleteGroup(g)"><i class="fa fa-remove"></i>
                 </button>
               </td>
               <td>{{g.name}}</td>
@@ -50,4 +46,4 @@
 <app-group-editor *ngIf="showEditor" (cancelledListener)="onCancel()" (itemSaved)="onSave()"
                   [selectedModel]="selectedModel"></app-group-editor>
 
-<app-group-appointments *ngIf="showAppointments" [group]="appointmentsGroup" (actionTaken)="hideAppointments()"></app-group-appointments>
+

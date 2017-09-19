@@ -7,11 +7,9 @@ import {ToastComponent} from '../shared/toast/toast.component';
   templateUrl: './group.component.html'
 })
 export class GroupComponent implements OnInit {
-  appointmentsGroup: any;
   selectedModel: any;
   groups: any[] = [];
   showEditor = false;
-  showAppointments = false;
 
   constructor(private crud: GroupCrudService, public toast: ToastComponent) {
   }
@@ -45,19 +43,5 @@ export class GroupComponent implements OnInit {
   onSave() {
     this.getGroups();
     this.showEditor = false;
-  }
-
-  manageAppointments(g: any) {
-    this.showAppointments = true;
-    this.appointmentsGroup = g;
-  }
-
-  /*appointmentsSaved(action: any) {
-    if (action === 'saved') {
-      this.toast.setMessage('Appointments saved successfully', 'success');
-    }
-  }*/
-  hideAppointments() {
-    this.showAppointments = false;
   }
 }
