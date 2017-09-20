@@ -37,6 +37,8 @@ export default class GroupController extends BaseCtrl {
   }
 
   insertWithAppointments = (req, res) => {
+
+
     Appointment.insertMany(req.body.appointments, (err, results) => {
       if (err) {
         return console.error(err);
@@ -78,11 +80,11 @@ export default class GroupController extends BaseCtrl {
   // Update by id
   updateAttendees = (req, res) => {
     const id = req.params.id || res.params._id;
-    console.log('**************************** ID: ', id);
+
     if (!id) {
       res.sendStatus(404);
     }
-    console.log('**************************** data: ', req.body);
+
     this.model.findOneAndUpdate({_id: req.params.id}, req.body, {'new': true}, (err) => {
       if (err) {
         return console.error(err);

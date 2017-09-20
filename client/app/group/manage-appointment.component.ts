@@ -1,4 +1,4 @@
-import {Component, OnInit, EventEmitter, Output} from '@angular/core';
+import {Component, OnInit, EventEmitter, Output, Input} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 // import {AppointmentCrudService} from './appointment-crud.service';
 import * as moment from 'moment';
@@ -13,7 +13,7 @@ export class ManageAppointmentComponent implements OnInit {
   config: { format: string };
   days = ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   appointments: any[] = [];
-
+  @Input() group: any;
 
   constructor(private fb: FormBuilder/*, private crudService: AppointmentCrudService*/) {
     this.config = {format: 'HH:SS A'};
@@ -24,6 +24,13 @@ export class ManageAppointmentComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.group && this.group.appointments) {
+      this.appointments = this.group.appointments;
+      this.group.appointments.forEach(x => {
+        this.days.splice(this.days.indexOf(x.day), 1);
+      });
+      this.setDefaultDay();
+    }
   }
 
   addAppointment() {

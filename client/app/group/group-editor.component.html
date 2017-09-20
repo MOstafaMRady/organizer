@@ -64,7 +64,7 @@
         </div>
       </div>
       <div class="col-sm-6">
-        <app-group-appointments (appointmentsChanged)="handleAppointments($event)"></app-group-appointments>
+        <app-group-appointments (appointmentsChanged)="handleAppointments($event)" [group]="selectedModel"></app-group-appointments>
       </div>
     </div>
     <br>
