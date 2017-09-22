@@ -8,7 +8,6 @@ import {AuthGuardLogin} from './services/auth-guard-login.service';
 import {AuthGuardAdmin} from './services/auth-guard-admin.service';
 import {AppComponent} from './app.component';
 import {CatsComponent} from './cats/cats.component';
-import {AboutComponent} from './about/about.component';
 import {RegisterComponent} from './register/register.component';
 import {LoginComponent} from './login/login.component';
 import {LogoutComponent} from './logout/logout.component';
@@ -37,12 +36,12 @@ import {ManageAppointmentComponent} from './group/manage-appointment.component';
 import {ModalModule} from 'ngx-bootstrap/modal';
 import {TimepickerModule} from 'ngx-bootstrap/timepicker';
 import {AppointmentCrudService} from './group/appointment-crud.service';
+import {HomeComponent} from './user-area/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CatsComponent,
-    AboutComponent,
     RegisterComponent,
     LoginComponent,
     LogoutComponent,
@@ -59,7 +58,8 @@ import {AppointmentCrudService} from './group/appointment-crud.service';
     GroupEditorComponent,
     PlaceEditorComponent,
     UserDataPipe,
-    ManageAppointmentComponent
+    ManageAppointmentComponent,
+    HomeComponent
   ],
   imports: [
     RoutingModule,

@@ -6,27 +6,27 @@
           aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <a class="navbar-brand" href="#"><i class="fa fa-check-square-o fa-3x"></i> <b>ORGANIZER</b></a>
+  <a class="navbar-brand" routerLink="/"><i class="fa fa-check-square-o fa-3x"></i> <b>ORGANIZER</b></a>
 
   <div class="collapse navbar-collapse" id="navbarColor01">
     <ul class="navbar-nav mr-auto">
       <li>
-        <a routerLink="/places" class="nav-item nav-link" routerLinkActive="active">
+        <a routerLink="/places" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn && auth.isAdmin">
           <i class="fa fa-map-marker fa-2x"></i> <b>Places</b>
         </a>
       </li>
       <li>
-        <a routerLink="/courses" class="nav-item nav-link" routerLinkActive="active">
+        <a routerLink="/courses" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn && auth.isAdmin">
           <i class="fa fa-graduation-cap  fa-2x"></i> <b>Courses</b>
         </a>
       </li>
       <li>
-        <a routerLink="/attendees" class="nav-item nav-link" routerLinkActive="active">
+        <a routerLink="/attendees" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn && auth.isAdmin">
           <i class="fa fa-user-circle-o  fa-2x"></i> <b>Attendees</b>
         </a>
       </li>
       <li>
-        <a routerLink="/groups" class="nav-item nav-link" routerLinkActive="active">
+        <a routerLink="/groups" class="nav-item nav-link" routerLinkActive="active" *ngIf="auth.loggedIn && auth.isAdmin">
           <i class="fa fa-users  fa-2x"></i> <b>Groups</b>
         </a>
       </li>
