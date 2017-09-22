@@ -1,6 +1,7 @@
 import Group from '../models/group';
 import Appointment from '../models/appointment';
 import BaseCtrl from './base';
+import {app} from '../app';
 
 
 export default class GroupController extends BaseCtrl {
@@ -59,30 +60,55 @@ export default class GroupController extends BaseCtrl {
   }
 
   updateWithAppointments = (req, res) => {
-    const id = req.params.id || res.params._id;
-    console.log(id);
-    if (!id) {
-      res.sendStatus(404);
-    }
-    this.model.findOneAndUpdate(
-      {_id: req.params.id},
-      req.body,
-      {new: true},
-      (err) => {
-        if (err) {
-          return console.error(err);
+
+    const appointments = req.body.appointments;
+    const groupId = req.params.id;
+    const group = req.body.group;
+
+    Appointment.find({group: {$eq: groupId}}, (err, dbAppointments) => {
+      if (err) {
+        return console.error(err);
+      }
+
+      dbAppointments.forEach(d => {
+        const foundAppointment = appointments.find(x => x._Id === d._id);
+        if (!foundAppointment) {
+          d.remove();
         }
-        res.sendStatus(200);
       });
+
+      const newAppointments = appointments.filter(x => !x._Id);
+      newAppointments.forEach(x => x.group = groupId);
+      Appointment.insertMany(req.body.appointments, (insertErr, results) => {
+
+        if (insertErr) {
+          return console.error(insertErr);
+        }
+
+        group.appointments = results;
+
+        // Update group
+        this.model.findOneAndUpdate({_id: groupId}, group, {'new': true}, (err2) => {
+          if (err2) {
+            return console.error(err2);
+          }
+          res.sendStatus(200);
+        });
+
+
+      });
+    });
   }
+
+
   // Update by id
   updateAttendees = (req, res) => {
     const id = req.params.id || res.params._id;
-    console.log('**************************** ID: ', id);
+
     if (!id) {
       res.sendStatus(404);
     }
-    console.log('**************************** data: ', req.body);
+
     this.model.findOneAndUpdate({_id: req.params.id}, req.body, {'new': true}, (err) => {
       if (err) {
         return console.error(err);
