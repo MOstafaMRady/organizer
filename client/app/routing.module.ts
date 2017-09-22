@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {CatsComponent} from './cats/cats.component';
-import {AboutComponent} from './about/about.component';
 import {RegisterComponent} from './register/register.component';
 import {LoginComponent} from './login/login.component';
 import {LogoutComponent} from './logout/logout.component';
@@ -15,22 +14,21 @@ import {PlaceComponent} from './place/place.component';
 import {CourseComponent} from './course/course.component';
 import {AttendeeComponent} from './attendee/attendee.component';
 import {GroupComponent} from './group/group.component';
-import {ManageAppointmentComponent} from './group/manage-appointment.component';
+import {HomeComponent} from './user-area/home.component';
 
 const routes: Routes = [
-  {path: '', component: AboutComponent},
+  {path: '', component: HomeComponent},
   {path: 'cats', component: CatsComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
   {path: 'logout', component: LogoutComponent},
   {path: 'account', component: AccountComponent, canActivate: [AuthGuardLogin]},
   {path: 'admin', component: AdminComponent, canActivate: [AuthGuardAdmin]},
-  {path: 'places', component: PlaceComponent},
-  {path: 'courses', component: CourseComponent},
-  {path: 'groups', component: GroupComponent},
-  {path: 'group/appointments', component: ManageAppointmentComponent},
-  {path: 'attendees', component: AttendeeComponent},
-  {path: 'notfound', component: NotFoundComponent},
+  {path: 'places', component: PlaceComponent, canActivate: [AuthGuardLogin]},
+  {path: 'courses', component: CourseComponent, canActivate: [AuthGuardLogin]},
+  {path: 'groups', component: GroupComponent, canActivate: [AuthGuardLogin]},
+  {path: 'attendees', component: AttendeeComponent, canActivate: [AuthGuardLogin]},
+  {path: 'notfound', component: NotFoundComponent, canActivate: [AuthGuardLogin]},
   {path: '**', redirectTo: '/notfound'},
 ];
 
