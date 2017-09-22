@@ -80,16 +80,22 @@ export default class GroupController extends BaseCtrl {
       const newAppointments = appointments.filter(x => !x._Id);
       newAppointments.forEach(x => x.group = groupId);
       Appointment.insertMany(req.body.appointments, (insertErr, results) => {
+
         if (insertErr) {
           return console.error(insertErr);
         }
+
         group.appointments = results;
+
+        // Update group
         this.model.findOneAndUpdate({_id: groupId}, group, {'new': true}, (err2) => {
           if (err2) {
             return console.error(err2);
           }
           res.sendStatus(200);
         });
+
+
       });
     });
   }

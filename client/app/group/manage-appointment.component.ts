@@ -18,6 +18,7 @@ export class ManageAppointmentComponent implements OnInit {
   constructor(private fb: FormBuilder/*, private crudService: AppointmentCrudService*/) {
     this.config = {format: 'HH:SS A'};
     this.form = this.fb.group({
+
       day: [this.days[0], Validators.required],
       time: [new Date(), Validators.required],
     });
@@ -26,6 +27,7 @@ export class ManageAppointmentComponent implements OnInit {
   ngOnInit() {
     if (this.group && this.group.appointments) {
       this.appointments = this.group.appointments;
+      this.appointmentsChanged.emit(this.appointments);
       this.group.appointments.forEach(x => {
         this.days.splice(this.days.indexOf(x.day), 1);
       });
