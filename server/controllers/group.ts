@@ -64,6 +64,7 @@ export default class GroupController extends BaseCtrl {
     const appointments = req.body.appointments;
     const groupId = req.params.id;
     const group = req.body.group;
+
     Appointment.find({group: {$eq: groupId}}, (err, dbAppointments) => {
       if (err) {
         return console.error(err);
@@ -77,26 +78,19 @@ export default class GroupController extends BaseCtrl {
       });
 
       const newAppointments = appointments.filter(x => !x._Id);
-      newAppointments.forEach(x => x.group = req.params.id);
+      newAppointments.forEach(x => x.group = groupId);
       Appointment.insertMany(req.body.appointments, (insertErr, results) => {
         if (insertErr) {
           return console.error(insertErr);
         }
         group.appointments = results;
-        this.model.findOneAndUpdate(
-          {_id: req.params.id},
-          group,
-          {'new': true},
-          (err2) => {
-            if (err2) {
-              return console.error(err2);
-            }
-            res.sendStatus(200);
-          });
-
+        this.model.findOneAndUpdate({_id: groupId}, group, {'new': true}, (err2) => {
+          if (err2) {
+            return console.error(err2);
+          }
+          res.sendStatus(200);
+        });
       });
-
-
     });
   }
 
