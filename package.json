@@ -1,9 +1,9 @@
 {
-  "name": "angular2-full-stack",
-  "version": "4.0.0",
+  "name": "mean stack with Angular 4",
+  "version": "4.2.0",
   "license": "MIT",
   "author": "Davide Violante",
-  "description": "Angular Full Stack project built using Angular 2+, Express, Mongoose and Node.",
+  "description": "Mean stack with Angular 4",
   "angular-cli": {},
   "scripts": {
     "ng": "ng",
