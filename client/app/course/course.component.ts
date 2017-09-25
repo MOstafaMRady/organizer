@@ -18,6 +18,13 @@ export class CourseComponent implements OnInit {
   showEditor: boolean;
   @ViewChildren('titleElInput') titleElInput: QueryList<any>;
   isLoading = false;
+  count: number;
+  currentPage = 1;
+  pageSize = 2;
+
+  totalAvailablePages() {
+    return Math.min(this.count / this.pageSize);
+  }
 
   constructor(private fb: FormBuilder, private placeCrudService: PlaceCrudService,
               private courseCrud: CourseCrudService, private w: NgZone, public toast: ToastComponent) {
@@ -45,9 +52,15 @@ export class CourseComponent implements OnInit {
 
   private getCourses() {
     this.isLoading = true;
-    this.courseCrud.getAll()
-      .subscribe(data => {
-          this.courses = data;
+
+    this.queryCourses();
+  }
+
+  private queryCourses() {
+    this.courseCrud.getAll(this.pageSize, this.currentPage)
+      .subscribe((data: any) => {
+          this.courses = data.courses;
+          this.count = data.count;
           this.isLoading = false;
         },
         err => console.log(err));
@@ -115,7 +128,7 @@ export class CourseComponent implements OnInit {
   }
 
   removeCourse(c: any) {
-    this.courseCrud.removeCourse(c).subscribe((res) => {
+    this.courseCrud.removeCourse(c).subscribe((/*res*/) => {
       this.toast.setMessage('Removed successfully', 'danger');
       this.getCourses();
     }, err => {
@@ -124,5 +137,21 @@ export class CourseComponent implements OnInit {
         this.toast.setMessage(`course is in use in group(s), ${body.map(x => x.name).join()}`, 'danger');
       }
     });
+  }
+
+  getNextPage() {
+    if (this.currentPage >= 1 && this.totalAvailablePages() > this.currentPage) {
+      this.currentPage++;
+      this.queryCourses();
+    } else {
+      this.toast.setMessage('No more data available', 'info');
+    }
+  }
+
+  getPrevPage() {
+    if (this.currentPage >= 1) {
+      this.currentPage--;
+      this.queryCourses();
+    }
   }
 }

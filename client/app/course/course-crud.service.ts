@@ -12,8 +12,8 @@ export class CourseCrudService {
   constructor(private http: Http) {
   }
 
-  getAll(): Observable<any[]> {
-    return this.http.get('/api/courses').map(res => res.json());
+  getAll(pageSize?: number, pageNumber?: number): Observable<any[]> {
+    return this.http.get('/api/courses?pageSize=' + pageSize + '&pageNum=' + pageNumber).map(res => res.json());
   }
 
   save(course: any) {

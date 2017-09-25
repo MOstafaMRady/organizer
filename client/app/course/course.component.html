@@ -12,8 +12,16 @@
         <thead>
         <tr class="card-header">
           <th>
-            <button type="button" class="btn btn-outline-primary" (click)="startAdd()"><i
-              class="fa fa-plus-circle fa-2x"></i></button>
+            <button type="button" class="btn btn-primary btn-sm" (click)="startAdd()"><i
+              class="fa fa-plus-circle"></i></button>
+            <button type="button"
+                    *ngIf="this.currentPage -1>=1"
+                    class="btn btn-secondary btn-sm" (click)="getPrevPage()"><i class="fa fa-chevron-left"></i>
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm" (click)="getNextPage()"
+                    *ngIf="this.currentPage +1<= this.totalAvailablePages()">
+              <i class="fa fa-chevron-right"></i>
+            </button>
           </th>
           <th>Title</th>
           <th>place</th>
@@ -23,15 +31,18 @@
         <tbody>
         <tr *ngFor="let c of courses">
           <td>
-            <button class="btn btn-secondary" (click)="startEdit(c)"><i class="fa fa-edit fa-lg"></i></button>
-            <button class="btn btn-secondary" (click)="removeCourse(c)"><i class="fa fa-remove fa-lg"></i></button>
+            <button class="btn btn-secondary btn-sm" (click)="startEdit(c)"><i class="fa fa-edit fa-lg"></i></button>
+            <button class="btn btn-secondary btn-sm" (click)="removeCourse(c)"><i class="fa fa-remove fa-lg"></i>
+            </button>
           </td>
           <td>
             <div class="title">{{c.title}}</div>
             <small class="help-block">{{c.description}}</small>
           </td>
           <td>
-            <div *ngIf="c.place" class="title"> {{c.place?.name}} - <small class="help-block">{{c.place?.address}}</small></div>
+            <div *ngIf="c.place" class="title"> {{c.place?.name}} -
+              <small class="help-block">{{c.place?.address}}</small>
+            </div>
 
           </td>
           <td>{{c.cost}}</td>

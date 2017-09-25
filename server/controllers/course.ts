@@ -7,13 +7,24 @@ export default class CourseController extends BaseCtrl {
   group = Group;
 
   getAll = (req, res) => {
-    this.model
-      .find({}, (err, docs) => {
-        if (err) {
-          return console.error(err);
-        }
-        res.json(docs);
-      }).populate('place');
+    const pageSize = parseInt(req.query.pageSize, 0) || 10;
+    const pageNum = (parseInt(req.query.pageNum, 0) - 1) || 0;
+
+    this.model.count({}, (err1, count) => {
+      if (err1) {
+        return console.error(err1);
+      }
+
+      this.model
+        .find({}, (err, docs) => {
+          if (err) {
+            return console.error(err);
+          }
+          res.json({count, courses: docs});
+        }).limit(pageSize).skip(pageNum * pageSize).populate('place');
+    });
+
+
   }
 
   updateItem = (req, res) => {

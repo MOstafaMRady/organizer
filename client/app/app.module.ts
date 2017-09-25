@@ -37,6 +37,7 @@ import {ModalModule} from 'ngx-bootstrap/modal';
 import {TimepickerModule} from 'ngx-bootstrap/timepicker';
 import {AppointmentCrudService} from './group/appointment-crud.service';
 import {HomeComponent} from './user-area/home.component';
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import {HomeComponent} from './user-area/home.component';
     ReactiveFormsModule,
     DpDatePickerModule,
     MomentModule,
+    InfiniteScrollModule,
     ModalModule.forRoot(),
     TimepickerModule.forRoot()
   ],
