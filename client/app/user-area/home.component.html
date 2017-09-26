@@ -1,3 +1,4 @@
+<br>
 <div class="row" *ngFor="let c of courses">
   <div class="col-sm-12">
     <div class="card">
@@ -6,7 +7,8 @@
         <h5 class="card-title">{{c.description}}</h5>
       </div>
       <div class="card-footer">
-        <a href="/" class="card-link">Register now..</a>
+        <button class="btn btn-primary" *ngIf="auth.loggedIn && !auth.isAdmin">Join</button>
+        <button *ngIf="!auth.loggedIn" (click)="joinCourse(c)" class="btn btn-primary">Join</button>
       </div>
     </div>
     <hr>
