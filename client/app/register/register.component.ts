@@ -34,9 +34,7 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.courseCrud.registrationCourse) {
-      this.course = this.courseCrud.registrationCourse;
-    }
+
 
     this.registerForm = this.formBuilder.group({
       username: this.username,

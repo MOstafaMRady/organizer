@@ -47,6 +47,6 @@ export class HomeComponent implements OnInit {
 
   joinCourse(course: any) {
     this.courseCrud.registrationCourse = course;
-    this.router.navigate(['/register']);
+    this.router.navigate(['/course-registration']);
   }
 }

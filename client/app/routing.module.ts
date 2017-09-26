@@ -15,6 +15,7 @@ import {CourseComponent} from './course/course.component';
 import {AttendeeComponent} from './attendee/attendee.component';
 import {GroupComponent} from './group/group.component';
 import {HomeComponent} from './user-area/home.component';
+import {CourseRegistrationComponent} from './course-registration/course-registration.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
   {path: 'logout', component: LogoutComponent},
+  {path: 'course-registration', component: CourseRegistrationComponent},
   {path: 'account', component: AccountComponent, canActivate: [AuthGuardLogin]},
   {path: 'admin', component: AdminComponent, canActivate: [AuthGuardAdmin]},
   {path: 'places', component: PlaceComponent, canActivate: [AuthGuardLogin]},
