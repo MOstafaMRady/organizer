@@ -1,44 +1,51 @@
+<br>
 <div class="card">
-  <div class="card-header"><h3>Register for course "{{course?.title}}"</h3></div>
+  <div class="card-header">
+    <h3>Register for course "{{course?.title}}"</h3></div>
   <div class="card-block">
     <form [formGroup]="form" (ngSubmit)="save()">
-      <div class="input-group"><!--[ngClass]="setClassUsername()"-->
-        <!--<span class="input-group-addon"><i class="fa fa-user"></i></span>-->
-        <input class="form-control" type="text" name="username" formControlName="username" placeholder="Username"
-               autofocus>
-      </div>
-      <div class="input-group"><!--[ngClass]="setClassEmail()"-->
-        <!--<span class="input-group-addon"><i class="fa fa-envelope"></i></span>-->
-        <input class="form-control" type="email" name="email" formControlName="email" placeholder="Email">
-      </div>
-      <div class="input-group"><!--[ngClass]="setClassPassword()"-->
-        <!--<span class="input-group-addon"><i class="fa fa-key"></i></span>-->
-        <input class="form-control" type="password" name="password" formControlName="password" placeholder="Password">
-      </div>
       <div class="row">
+        <div class="col-sm-1"></div>
         <div class="col-sm-4">
+          <div class="form-group"
+               [ngClass]="{'has-danger':form.get('username')?.invalid && form.get('username').touched}">
+            <!--[ngClass]="setClassUsername()"-->
+            <!--<span class="input-group-addon"><i class="fa fa-user"></i></span>-->
+            <label class="form-control-label" for="username">User Name</label>
+            <input class="form-control" type="text" id="username" name="username" formControlName="username"
+                   autofocus>
+          </div>
+          <div class="form-group"
+               [ngClass]="{'has-danger':form.get('email')?.invalid && form.get('email').touched}">
+            <!--[ngClass]="setClassEmail()"-->
+            <!--<span class="input-group-addon"><i class="fa fa-envelope"></i></span>-->
+            <label for="email" class="form-control-label">E-mail</label>
+            <input class="form-control" id="email" type="email" name="email" formControlName="email">
+          </div>
+          <div class="form-group"
+               [ngClass]="{'has-danger':form.get('password')?.invalid && form.get('password').touched}">
+            <!--[ngClass]="setClassPassword()"-->
+            <!--<span class="input-group-addon"><i class="fa fa-key"></i></span>-->
+            <label for="password" class="form-control-label">Password</label>
+            <input class="form-control" type="password" id="password" name="password" formControlName="password">
+          </div>
           <div class="form-group"
                [ngClass]="{'has-danger':form.get('firstName')?.invalid && form.get('firstName').touched}">
             <label for="title" class="form-control-label"> First Name</label>
             <input class="form-control" #titleElInput id="title" formControlName="firstName">
           </div>
-        </div>
-        <div class="col-sm-4">
           <div class="form-group">
             <label for="middleName" class="control-label"> Middle Name</label>
             <input class="form-control" id="middleName" formControlName="middleName">
           </div>
-        </div>
-        <div class="col-sm-4">
           <div class="form-group"
                [ngClass]="{'has-danger':form.get('lastName')?.invalid && form.get('lastName').touched}">
             <label for="lastName" class="form-control-label">Last Name</label>
             <input class="form-control" id="lastName" formControlName="lastName">
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-4">
           <div class="form-group"
                [ngClass]="{'has-danger':form.get('gender')?.invalid && form.get('gender').touched}">
             <label for="gender" class="form-control-label"> Gender</label>
@@ -46,8 +53,13 @@
               <option *ngFor="let g of genderData" [value]="g">{{g}}</option>
             </select>
           </div>
-        </div>
-        <div class="col-sm-3">
+          <div class="form-group"
+               [ngClass]="{'has-danger':form.get('group')?.invalid && form.get('group').touched}">
+            <label for="group" class="form-control-label"> Group</label>
+            <select class="form-control" formControlName="group" id="group">
+              <option *ngFor="let g of groups" [value]="g._id">{{g.name}}</option>
+            </select>
+          </div>
           <div class="form-group"
                [ngClass]="{'has-danger':form.get('birthDate')?.invalid && form.get('birthDate').touched}">
             <label class="form-control-label" for="birthDate">Birth Date</label>
@@ -58,8 +70,6 @@
                 Invalid Date - (format: day/month/year)</span>
             </div>
           </div>
-        </div>
-        <div class="col-sm-3">
           <div class="form-group"
                [ngClass]="{'has-danger':form.get('phone1')?.invalid && form.get('phone1').touched}">
             <label for="phone1" class="form-control-label"> Phone 1</label>
@@ -74,8 +84,6 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-sm-3">
           <div class="form-group" [ngClass]="{'has-danger':form.get('phone2')?.invalid && form.get('phone2').touched}">
             <label for="phone2" class="form-control-label"> Phone 2</label>
             <input class="form-control" id="phone2" formControlName="phone2">
@@ -88,11 +96,12 @@
               </div>
             </div>
           </div>
+          <div class="form-group">
+            <label for="address" class="control-label"> Address</label>
+            <textarea class="form-control" id="address" formControlName="address"></textarea>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="address" class="control-label"> Address</label>
-        <textarea class="form-control" id="address" formControlName="address"></textarea>
+        <div class="col-sm-1"></div>
       </div>
       <div class="row">
         <div class="col-sm-12">
@@ -101,6 +110,7 @@
         </div>
       </div>
     </form>
+    <pre *ngIf="form && form.value">{{ form.value | json }}</pre>
   </div>
 </div>
 

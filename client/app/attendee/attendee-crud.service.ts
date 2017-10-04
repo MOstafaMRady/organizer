@@ -29,4 +29,8 @@ export class AttendeeCrudService {
   getUsers() {
     return this.http.get('/api/users').map(x => x.json());
   }
+
+  addToCourseGroup(toSend: any) {
+    return this.http.post('/api/group/join', toSend, this.options);
+  }
 }

@@ -7,6 +7,8 @@ import {Router} from '@angular/router';
 import {UserService} from '../services/user.service';
 import {AttendeeCrudService} from '../attendee/attendee-crud.service';
 import {GenderData} from '../shared/gender-data.service';
+import {GroupCrudService} from '../group/group-crud.service';
+import * as moment from 'moment';
 
 @Component({
   templateUrl: './course-registration.component.html'
@@ -16,13 +18,14 @@ export class CourseRegistrationComponent implements OnInit {
   form: FormGroup;
   genderData = [];
   config = {format: 'DD/MM/YYYY'};
+  groups = [];
 
   constructor(private fb: FormBuilder,
               private courseCrud: CourseCrudService,
               private router: Router,
               private userService: UserService,
               private attendeeCrud: AttendeeCrudService,
-              private genderDataService: GenderData) {
+              private genderDataService: GenderData, private groupCrud: GroupCrudService) {
     this.prepareForm();
     this.genderData = this.genderDataService.genderData;
   }
@@ -32,23 +35,29 @@ export class CourseRegistrationComponent implements OnInit {
       this.course = this.courseCrud.registrationCourse;
     } else {
       this.router.navigateByUrl('/');
+      return;
     }
+    this.groupCrud.getAll().subscribe((data: any[]) => {
+      this.groups = data.filter((x: any) => x.course._id === this.course._id);
+    });
   }
 
   prepareForm() {
     const pattern = '[a-zA-Z0-9_-\\s]*';
     this.form = this.fb.group({
-      username: ['', [_v.required, _v.minLength(2), _v.maxLength(30), _v.pattern(pattern)]],
-      email: ['', [_v.required, _v.minLength(3), _v.maxLength(100)]],
-      password: ['', [_v.required, _v.minLength(6)]],
-      firstName: ['', _v.required],
+      username: ['x23xx', [_v.required, _v.minLength(2), _v.maxLength(30), _v.pattern(pattern)]],
+      email: ['xxx23@xxx', [_v.required, _v.minLength(3), _v.maxLength(100)]],
+      password: ['123qwe', [_v.required, _v.minLength(6)]],
+      firstName: ['XxX', _v.required],
       middleName: [''],
-      lastName: ['', _v.required],
-      gender: ['', _v.required],
-      birthDate: ['', [_v.required, DateFormatValidator()]],
-      phone1: ['', [_v.required, CustomValidators.number, CustomValidators.rangeLength([6, 11])]],
+      lastName: ['terst', _v.required],
+      gender: ['Male', _v.required],
+      birthDate: ['25/01/2011', [_v.required, DateFormatValidator()]],
+      phone1: ['01000000', [_v.required, CustomValidators.number, CustomValidators.rangeLength([6, 11])]],
       phone2: ['', [CustomValidators.number, CustomValidators.rangeLength([6, 11])]],
-      address: ['']
+      address: ['Holland'],
+      group: [''],
+      course: [this.course ? this.course._id : null]
     });
   }
 
@@ -59,19 +68,31 @@ export class CourseRegistrationComponent implements OnInit {
       email: this.form.value.email,
       role: 'user'
     };
-    this.userService.register(user).subscribe(() => {
-      const vale = this.form.value;
+
+    this.userService.register(user).subscribe((savedUser: any) => {
+      const attendeeToSave = this.form.value;
       const attendee = {
-        firstName: vale.firstName,
-        middleName: vale.middleName,
-        lastName: vale.lastName,
-        gender: vale.gender,
-        birthDate: vale.birthDate,
-        phone1: vale.phone1,
-        phone2: vale.phone2,
-        address: vale.address
+        firstName: attendeeToSave.firstName,
+        middleName: attendeeToSave.middleName,
+        lastName: attendeeToSave.lastName,
+        gender: attendeeToSave.gender,
+        birthDate: moment(attendeeToSave.birthDate, 'DD/MM/YYYY').toDate(),
+        phone1: attendeeToSave.phone1,
+        phone2: attendeeToSave.phone2,
+        address: attendeeToSave.address,
+        user: savedUser._id
       };
-      this.attendeeCrud.save(attendee).subscribe(() => alert('hoba'));
+
+      this.attendeeCrud.save(attendee)
+        .subscribe((savedAttendee) => {
+          const attendeeId = JSON.parse(savedAttendee._body)._id;
+          const toSend = {
+            attendee: attendeeId,
+            course: this.course._id,
+            group: this.form.value.group ? this.form.value.group : null
+          };
+          this.attendeeCrud.addToCourseGroup(toSend).subscribe(data => console.log(data));
+        });
     });
   }
 

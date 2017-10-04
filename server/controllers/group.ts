@@ -100,6 +100,42 @@ export default class GroupController extends BaseCtrl {
     });
   }
 
+  /*addAttendeeToGroup = (req, res) => {
+
+
+    const courseId = req.params.courseId;
+
+
+    this.model.find({group: {$eq: groupId}}, (err, dbAppointments) => {
+      if (err) {
+        return console.error(err);
+      }
+
+
+
+      const newAppointments = appointments.filter(x => !x._Id);
+      newAppointments.forEach(x => x.group = groupId);
+      Appointment.insertMany(req.body.appointments, (insertErr, results) => {
+
+        if (insertErr) {
+          return console.error(insertErr);
+        }
+
+        group.appointments = results;
+
+        // Update group
+        this.model.findOneAndUpdate({_id: groupId}, group, {'new': true}, (err2) => {
+          if (err2) {
+            return console.error(err2);
+          }
+          res.sendStatus(200);
+        });
+
+
+      });
+    });
+  }*/
+
 
   // Update by id
   updateAttendees = (req, res) => {
@@ -115,5 +151,45 @@ export default class GroupController extends BaseCtrl {
       }
       res.sendStatus(200);
     });
+  }
+
+  join = (req, res) => {
+    if (req.body) {
+      if (req.body.group) {
+        this.model.findById(req.body.group, (err, group) => {
+            if (err) {
+              return console.error(err);
+            }
+
+            if (group) {
+              if (req.body.attendee) {
+                group.attendees.push(req.body.attendee);
+                group.save();
+                res.json(group);
+              }
+            }
+          }
+        ).populate('attendees');
+      } else {
+        const data = {
+          name: 'Pending group',
+          course: req.body.course,
+          attendees: [
+            req.body.attendee
+          ]
+        };
+        const obj = new this.model(data);
+        obj.save((err, item) => {
+          // 11000 is the code for duplicate key error
+          if (err && err.code === 11000) {
+            res.sendStatus(400);
+          }
+          if (err) {
+            return console.error(err);
+          }
+          res.status(200).json(item);
+        });
+      }
+    }
   }
 }

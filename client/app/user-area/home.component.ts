@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
   courses: any[] = [];
   count: number;
   pageNum = 1;
-  pageSize = 3;
+  pageSize = 10;
 
   ngOnInit(): void {
     this.getCourses();
