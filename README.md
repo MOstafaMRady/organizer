@@ -1,1 +1,1 @@
-## Mean stack 2 - all in typescript
+## Mean stack with Angular 4 - all in typescript
