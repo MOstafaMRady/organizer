@@ -32,6 +32,7 @@ export default function setRoutes(app) {
   router.route('/group/:id').delete(groupController.delete);
   router.route('/attendee/group/count/:id').get(groupController.getAttendeeGroups);
   router.route('/group/:id/appointments').post(groupController.updateAttendees);
+  router.route('/group/join').post(groupController.join);
 
   // Attendees
   router.route('/attendees').get(attendeeController.getAll);

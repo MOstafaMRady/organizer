@@ -1,6 +1,8 @@
 import {Component, HostListener, Inject, OnInit} from '@angular/core';
 import {CourseCrudService} from '../course/course-crud.service';
 import {DOCUMENT} from '@angular/common';
+import {AuthService} from '../services/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +12,7 @@ export class HomeComponent implements OnInit {
   courses: any[] = [];
   count: number;
   pageNum = 1;
-  pageSize = 3;
+  pageSize = 10;
 
   ngOnInit(): void {
     this.getCourses();
@@ -24,7 +26,10 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  constructor(private courseCrud: CourseCrudService, @Inject(DOCUMENT) private document: Document) {
+  constructor(private courseCrud: CourseCrudService,
+              private router: Router,
+              @Inject(DOCUMENT) private document: Document,
+              public auth: AuthService) {
   }
 
   @HostListener('window:scroll', [])
@@ -38,5 +43,10 @@ export class HomeComponent implements OnInit {
     }
     this.pageNum++;
     this.getCourses();
+  }
+
+  joinCourse(course: any) {
+    this.courseCrud.registrationCourse = course;
+    this.router.navigate(['/course-registration']);
   }
 }

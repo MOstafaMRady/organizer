@@ -61,8 +61,8 @@ export class GroupEditorComponent implements OnInit {
   }
 
   getCourses() {
-    this.courseCrud.getAll().subscribe(
-      (data: any[]) => this.courses = data,
+    this.courseCrud.getAll(100, 1).subscribe(
+      (data: any) => this.courses = data.courses,
       err => console.log(err),
       () => this.isLoading = false
     );
@@ -103,10 +103,12 @@ export class GroupEditorComponent implements OnInit {
   }
 
   filterCoursesByPlace(placeId?: any): any[] {
-    if (!placeId) {
-      return [];
+    if (placeId) {
+      if (this.courses && this.courses.length > 0) {
+        return this.courses.filter((x: any) => x.place && x.place._id === placeId);
+      }
     }
-    return this.courses.filter((x: any) => x.place && x.place._id === placeId);
+    return [];
   }
 
   onCancel() {

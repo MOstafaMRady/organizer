@@ -4,10 +4,20 @@ import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class CourseCrudService {
+  get registrationCourse(): any {
+    return this.course;
+  }
+
+  set registrationCourse(value: any) {
+    this.course = value;
+  }
+
   private headers = new Headers({'Content-Type': 'application/json', 'charset': 'UTF-8'});
   private options = new RequestOptions({
     headers: this.headers
   });
+
+  private course: any;
 
   constructor(private http: Http) {
   }
@@ -27,4 +37,6 @@ export class CourseCrudService {
   removeCourse(c: any) {
     return this.http.delete('/api/course/' + c._id);
   }
+
+
 }

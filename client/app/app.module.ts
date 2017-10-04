@@ -38,6 +38,7 @@ import {TimepickerModule} from 'ngx-bootstrap/timepicker';
 import {AppointmentCrudService} from './group/appointment-crud.service';
 import {HomeComponent} from './user-area/home.component';
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
+import {CourseRegistrationComponent} from './course-registration/course-registration.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import {InfiniteScrollModule} from 'ngx-infinite-scroll';
     PlaceEditorComponent,
     UserDataPipe,
     ManageAppointmentComponent,
-    HomeComponent
+    HomeComponent,
+    CourseRegistrationComponent
   ],
   imports: [
     RoutingModule,
